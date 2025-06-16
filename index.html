@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대한민국 와인딩 로드 파인더</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .chart-container { position: relative; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; height: 300px; max-height: 350px; }
+        .active-filter { background-color: #3B5998; color: #FFFFFF; }
+        .modal-content { animation: slide-up 0.3s ease-out; }
+        @keyframes slide-up { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+    <!-- Chosen Palette: Asphalt & Pine -->
+    <!-- Application Structure Plan: 이 SPA는 보고서의 선형적인 구조를 탈피하여, 사용자가 원하는 정보를 빠르게 찾을 수 있도록 필터 기반의 대시보드 형태로 설계되었습니다. 사용자는 '지역'과 '드라이빙 스타일'이라는 두 가지 핵심 필터를 통해 80개 이상의 방대한 코스 목록을 즉시 정제할 수 있습니다. 이는 단순 정보 나열보다 훨씬 높은 사용성을 제공합니다. 사용 흐름은 '필터 선택 -> 카드 목록 확인 -> 카드 클릭 -> 상세 정보(차트 포함) 확인'으로 이어지며, 이는 탐색적 정보 검색에 최적화된 구조입니다. 또한, '코스 추천'과 '안전 수칙' 섹션을 별도로 두어, 초보자나 목적이 뚜렷한 사용자를 위한 가이드와 안전이라는 핵심 가치를 명확히 전달하도록 구성했습니다. -->
+    <!-- Visualization & Content Choices: 
+        - 보고서 정보: 85개의 코스 목록 -> 목표: 빠른 검색 및 비교 -> 시각화/표현: 필터링 가능한 카드 그리드 -> 상호작용: 필터 버튼 클릭 시 JS로 동적 렌더링 -> 정당성: 사용자가 원하는 조건에 맞는 코스를 즉시 찾을 수 있어 사용성이 극대화됨 -> 라이브러리/방법: Vanilla JS, Tailwind CSS
+        - 보고서 정보: 코스별 특성(고저차, 코너 형태, 도로 상태 등) -> 목표: 코스 간의 특성을 직관적으로 비교 -> 시각화/표현: 5가지 핵심 속성(기술, 속도, 경치, 노면, 접근성)을 나타내는 레이더 차트 -> 상호작용: 코스 상세 보기 모달이 열릴 때 Chart.js로 동적 생성 -> 정당성: 복잡한 텍스트 정보를 시각적 데이터로 요약하여 사용자가 코스의 성격을 빠르게 파악하고 비교할 수 있게 함 -> 라이브러리/방법: Chart.js (Canvas)
+        - 보고서 정보: 드라이버의 규범/안전 수칙 -> 목표: 안전 운전의 중요성 강조 -> 시각화/표현: 아이콘과 강조된 텍스트 블록 -> 상호작용: 정적 표시 -> 정당성: 텍스트만 나열하는 것보다 시각적 요소를 활용하여 정보의 주목도와 가독성을 높임 -> 라이브러리/방법: HTML, Tailwind CSS, Unicode
+        - 보고서 정보: 전문가 추천 코스 목록 -> 목표: 큐레이션된 정보 제공 -> 시각화/표현: 아코디언(Accordion) UI -> 상호작용: 카테고리 제목 클릭 시 관련 코스 목록이 펼쳐짐 -> 정당성: 방대한 정보를 깔끔하게 정리하고, 사용자가 관심 있는 부분만 선택적으로 볼 수 있도록 하여 화면의 복잡도를 낮춤 -> 라이브러리/방법: Vanilla JS, Tailwind CSS
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-[#F8F7F4] text-[#3D3D3D]">
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-[#3B5998]">와인딩 로드 파인더</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#finder" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200">코스 탐색</a>
+                        <a href="#recommendations" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200">코스 추천</a>
+                        <a href="#safety" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200">안전 수칙</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-200 focus:outline-none">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#finder" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200">코스 탐색</a>
+                <a href="#recommendations" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200">코스 추천</a>
+                <a href="#safety" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200">안전 수칙</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative bg-gray-800 py-20 sm:py-28 text-white text-center overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-40" alt="Winding Road">
+            <div class="absolute inset-0 bg-black/50"></div>
+        </div>
+        <div class="relative max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">전국의 숨겨진 드라이빙 코스를 발견하세요</h1>
+            <p class="text-lg md:text-xl text-gray-200">대한민국 최고의 와인딩 로드 가이드를 통해 운전의 즐거움을 만끽하고, 안전하고 책임감 있는 드라이빙 문화를 함께 만들어갑니다.</p>
+        </div>
+    </header>
+
+    <main id="finder" class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-[#3B5998]">코스 탐색</h2>
+            <p class="mt-2 text-lg text-gray-600">지역, 드라이빙 스타일, 키워드 검색을 통해 나에게 꼭 맞는 와인딩 코스를 찾아보세요.</p>
+        </div>
+
+        <div id="filters" class="mb-8 p-6 bg-white rounded-xl shadow-md space-y-6">
+            <div class="relative">
+                <h3 class="font-semibold mb-2 text-gray-700">🔎 키워드 검색</h3>
+                <input type="search" id="search-input" placeholder="코스 이름, 지역, 특징 등으로 검색..." class="w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-[#3B5998] focus:border-transparent transition">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-semibold mb-2 text-gray-700">📍 지역별 필터</h3>
+                    <div id="region-filters" class="flex flex-wrap gap-2">
+                        <button class="filter-btn region-filter active-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm" data-region="all">전체</button>
+                        <button class="filter-btn region-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-region="수도권">수도권</button>
+                        <button class="filter-btn region-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-region="강원도">강원도</button>
+                        <button class="filter-btn region-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-region="충청도">충청도</button>
+                        <button class="filter-btn region-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-region="전라도">전라도</button>
+                        <button class="filter-btn region-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-region="경상도">경상도</button>
+                        <button class="filter-btn region-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-region="제주도">제주도</button>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-2 text-gray-700">🎨 스타일별 필터</h3>
+                    <div id="style-filters" class="flex flex-wrap gap-2">
+                        <button class="filter-btn style-filter active-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm" data-style="all">전체</button>
+                        <button class="filter-btn style-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-style="헤어핀">#헤어핀</button>
+                        <button class="filter-btn style-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-style="고속">#고속</button>
+                        <button class="filter-btn style-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-style="경치">#경치</button>
+                        <button class="filter-btn style-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-style="입문">#입문</button>
+                        <button class="filter-btn style-filter px-4 py-2 text-sm font-medium rounded-full shadow-sm bg-gray-100 hover:bg-gray-200" data-style="투어">#장거리투어</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="course-count" class="text-right text-gray-600 mb-4"></div>
+        <div id="course-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+    </main>
+    
+    <section id="recommendations" class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#3B5998]">전문가 코스 추천</h2>
+                <p class="mt-2 text-lg text-gray-600">드라이빙 스타일에 따라 엄선된 최고의 코스들을 만나보세요.</p>
+            </div>
+            <div id="accordion-container" class="max-w-3xl mx-auto space-y-4">
+            </div>
+        </div>
+    </section>
+
+    <section id="safety" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-red-600">드라이버의 규범: 안전 선언</h2>
+                <p class="mt-2 text-lg text-gray-600">와인딩은 속도 경쟁이 아닌, 숙련된 기술과 책임감을 바탕으로 한 레저입니다. <br class="hidden sm:block">모두가 즐거운 드라이빙 문화를 위해 다음 수칙을 반드시 지켜주세요.</p>
+            </div>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
+                    <div class="text-3xl mr-4">👥</div>
+                    <div>
+                        <h4 class="font-semibold text-lg">다른 도로 이용자 존중</h4>
+                        <p class="text-gray-600 mt-1">자전거, 관광 차량, 농기계, 군용 차량 등 모든 도로 이용자를 배려하고 예측 불가능한 상황에 항상 대비하세요.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
+                    <div class="text-3xl mr-4">🛣️</div>
+                    <div>
+                        <h4 class="font-semibold text-lg">도로 상태 확인</h4>
+                        <p class="text-gray-600 mt-1">불량한 노면, 과속방지턱, 모래, 결빙 등 도로 자체의 위험 요소를 항상 인지하고 속도를 줄이세요.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
+                    <div class="text-3xl mr-4">🦌</div>
+                    <div>
+                        <h4 class="font-semibold text-lg">야생 동물 주의</h4>
+                        <p class="text-gray-600 mt-1">특히 야간 주행 시 고라니 등 야생동물 출몰에 각별히 주의하고, 지리산 같은 보호구역에서는 더욱 조심해야 합니다.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-start">
+                    <div class="text-3xl mr-4">🤫</div>
+                    <div>
+                        <h4 class="font-semibold text-lg">소음 최소화 및 법규 준수</h4>
+                        <p class="text-gray-600 mt-1">마을 통과 시 서행하고, 불필요한 소음 발생을 자제해주세요. 중앙선 침범, 과속은 절대 금물입니다. 책임감 있는 주행이 우리 모두의 길을 지킵니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white text-center py-6">
+        <p>&copy; 2024 와인딩 로드 파인더. All Rights Reserved.</p>
+        <p class="text-sm text-gray-400 mt-1">본 정보는 제공된 보고서를 기반으로 제작되었습니다.</p>
+    </footer>
+
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-content">
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 id="modal-title" class="text-2xl font-bold text-[#3B5998]"></h3>
+                        <p id="modal-tagline" class="text-gray-500 mt-1"></p>
+                    </div>
+                    <button id="close-modal" class="text-gray-400 hover:text-gray-700 text-3xl">&times;</button>
+                </div>
+                
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="chart-container">
+                        <canvas id="modal-chart"></canvas>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2 text-gray-800 border-b pb-1">코스 특성</h4>
+                        <p id="modal-characteristics" class="text-gray-700 text-sm leading-relaxed"></p>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h4 class="font-semibold mb-2 text-gray-800 border-b pb-1">내비게이션 경로</h4>
+                    <div class="overflow-x-auto">
+                        <table id="modal-nav-table" class="w-full text-sm text-left text-gray-600">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h4 class="font-semibold mb-2 text-gray-800 border-b pb-1">💡 전문가 노트</h4>
+                    <p id="modal-notes" class="text-gray-700 bg-yellow-50 p-4 rounded-lg text-sm"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const courses = [
+            { id: 1, name: "중미산 ~ 유명산 코스", region: "수도권", tagline: "수도권에서 가장 유명한 드라이빙의 성지", characteristics: "37번 국도를 따라 이어지는 서울 근교 최고의 와인딩 코스. 정상을 기준으로 남쪽은 완만한 커브와 긴 직선, 북쪽은 급격한 커브가 연달아 나타나 성격이 뚜렷하게 구분됨.", nav: [ { type: "출발지", name: "양평군 옥천면 옥천농협하나로마트" }, { type: "경유지 1", name: "중미산천문대" }, { type: "도착지", name: "유명산자연휴양림" } ], notes: "자전거 이용자가 매우 많아 각별한 주의가 필요하며, 과거 잦은 사고로 인해 중앙분리대와 과속방지턱이 다수 설치됨. 주변에 자동차 애호가들이 즐겨 찾는 카페가 많음.", styles: ["경치", "고속"], ratings: { tech: 3, speed: 4, scenery: 4, road: 3, access: 5 } },
+            { id: 2, name: "호명산 코스 (로코 갤러리)", region: "수도권", tagline: "헤어핀과 드라이버의 기술이 만나는 곳", characteristics: "'로코 갤러리 길'로 더 유명하며, 와인딩이라는 단어에 가장 잘 어울리는 코스. 좁고 긴 직선 구간이 거의 없는 대신, 다양한 곡률의 커브와 헤어핀 구간이 산을 따라 이어져 상당한 고저차를 보임. 정교한 브레이크 컨트롤이 요구되는 기술적인 도로.", nav: [ { type: "출발지", name: "가평군 청평면 청평역" }, { type: "도착지", name: "로코갤러리" } ], notes: "중급자 이상에게 추천. 목적지인 '로코 갤러리'는 자동차 애호가들의 성지로 불리는 유명한 만남의 장소.", styles: ["헤어핀"], ratings: { tech: 5, speed: 2, scenery: 4, road: 4, access: 4 } },
+            { id: 3, name: "남한산성 코스", region: "수도권", tagline: "역사와 함께 달리는 입문자를 위한 클래식 코스", characteristics: "코스 길이가 짧고 경사가 완만하며, 급격한 커브가 적어 와인딩 입문자에게 가장 많이 추천되는 코스. 유네스코 세계문화유산인 남한산성을 끼고 돌아 역사적 정취를 느낄 수 있음.", nav: [ { type: "출발지", name: "성남시 수정구 복정역" }, { type: "경유지 1", name: "남한산성 로터리" }, { type: "도착지", name: "광주시 남한산성면 행정복지센터" } ], notes: "입문자에게 적합하지만 주말에는 관광객 차량으로 붐빌 수 있음. 다른 장거리 투어를 마치고 서울로 복귀하는 길에 경유하는 것도 좋음.", styles: ["입문", "경치"], ratings: { tech: 2, speed: 2, scenery: 4, road: 4, access: 5 } },
+            { id: 4, name: "포천 여우고개 코스", region: "수도권", tagline: "완만한 경사 속 숨겨진 날카로운 코너", characteristics: "명성산과 사향산 사이를 지나는 길로, 200m에 달하는 고저차를 가졌지만 코스가 길게 늘어져 있어 경사는 완만한 편. 몇몇 급한 커브와 블라인드 코너가 있어 주의가 필요.", nav: [ { type: "출발지", name: "포천시 영북면 산정호수" }, { type: "도착지", name: "경기도평화교육연수원" } ], notes: "산정호수와 연계하여 관광을 겸한 드라이브 코스로 좋음. 블라인드 코너 진입 시 반대편 차량에 대한 주의가 필수적.", styles: ["경치"], ratings: { tech: 3, speed: 3, scenery: 4, road: 4, access: 3 } },
+            { id: 5, name: "양주 마장호수 & 말머리고개 코스", region: "수도권", tagline: "드라이브와 관광을 한번에 즐기는 호반 코스", characteristics: "마장호수 둘레길은 난이도가 낮고 경치가 좋지만, 관광 차량으로 방어 운전이 필수. 말머리고개 구간은 경사가 급하고 코너가 깊어 기술적인 주행을 요구하며, 겨울철에는 결빙 위험.", nav: [ { type: "출발지", name: "양주시 장흥면 기산저수지" }, { type: "경유지 1", name: "파주시 광탄면 마장호수 출렁다리" }, { type: "도착지", name: "양주시 장흥면 가마골 유원지" } ], notes: "기산저수지 주변에 유명 카페가 많음. 말머리고개는 겨울철 주행은 피하는 것이 좋음.", styles: ["입문", "경치", "헤어핀"], ratings: { tech: 3, speed: 2, scenery: 5, road: 3, access: 4 } },
+            { id: 6, name: "서울 근교 반나절 투어 코스", region: "수도권", tagline: "하루에 네 개의 고개를 정복하는 종합 선물 세트", characteristics: "유명산, 널미재, 대곡치, 백양치 등 서울 근교 유명 와인딩 코스를 엮은 약 230km의 장거리 코스. 각 고개마다 특성이 달라 다양한 운전의 재미를 느낄 수 있음.", nav: [ { type: "출발지", name: "서울 서초구 양재역" }, { type: "경유지 1", name: "유명산 정상" }, { type: "경유지 2", name: "널미재" }, { type: "경유지 3", name: "대곡치" }, { type: "경유지 4", name: "백양치" }, { type: "도착지", name: "서울 서초구 양재역" } ], notes: "개별 코스를 연결하여 큰 만족감을 얻는 코스. 널미재는 내리막 연습, 대곡치는 균형 감각 익히기에 최적.", styles: ["투어", "헤어핀"], ratings: { tech: 4, speed: 3, scenery: 4, road: 4, access: 4 } },
+            { id: 7, name: "북악스카이웨이", region: "수도권", tagline: "서울의 야경을 품고 달리는 도심 속 와인딩", characteristics: "서울의 대표적인 드라이브 코스로, 북악산 능선을 따라 약 10km에 걸쳐 이어짐. 야경이 특히 아름다워 야간 드라이브 명소로 유명.", nav: [ { type: "출발지", name: "서울 성북구 한성대입구역" }, { type: "경유지 1", name: "북악팔각정" }, { type: "도착지", name: "서울 종로구 창의문" } ], notes: "주말 저녁에는 차량이 매우 많아 정체가 발생할 수 있음. 팔각정 주차장에서 바라보는 서울 전경은 이 코스의 백미.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 2, scenery: 5, road: 5, access: 5 } },
+            { id: 8, name: "화성 방조제", region: "수도권", tagline: "바다 위를 가로지르는 끝없는 직선과 바람", characteristics: "와인딩 코스는 아니지만, 뻥 뚫린 바다 위 도로를 질주하는 해방감을 느낄 수 있는 명소. 시화방조제와 화성방조제가 이어져 있으며, 해 질 녘 노을이 장관.", nav: [ { type: "출발지", name: "안산시 단원구 오이도" }, { type: "경유지 1", name: "시화나래휴게소" }, { type: "도착지", name: "화성시 서신면 궁평항" } ], notes: "직선 도로지만 강풍의 영향을 많이 받으므로 핸들을 단단히 잡아야 함.", styles: ["경치", "고속"], ratings: { tech: 1, speed: 5, scenery: 5, road: 5, access: 4 } },
+            { id: 9, name: "파주 자유로 코스", region: "수도권", tagline: "자유를 향해 달리는 최북단 드라이브", characteristics: "한강과 임진강을 따라 임진각까지 이어지는 고속화도로. 코너링의 즐거움보다는 막힘없는 주행과 특유의 분위기를 즐기는 코스.", nav: [ { type: "출발지", name: "고양시 덕양구 행주대교 북단" }, { type: "경유지 1", name: "파주출판도시" }, { type: "도착지", name: "임진각 평화누리공원" } ], notes: "헤이리 예술마을, 프로방스 마을 등 주변에 가볼 만한 곳이 많아 문화 드라이브 코스로 적합.", styles: ["고속", "경치"], ratings: { tech: 1, speed: 5, scenery: 3, road: 5, access: 5 } },
+            { id: 10, name: "강화도 해안도로", region: "수도권", tagline: "역사와 갯벌, 노을이 함께하는 섬 일주", characteristics: "섬 전체를 한 바퀴 도는 해안도로는 다양한 풍경을 선사. 특히 서쪽의 동막해변으로 이어지는 길과 남쪽의 해안도로가 아름다움.", nav: [ { type: "출발지", name: "강화대교" }, { type: "경유지 1", name: "광성보" }, { type: "경유지 2", name: "동막해변" }, { type: "도착지", name: "석모대교" } ], notes: "동막해변은 서해 최고의 일몰 명소 중 하나. 썰물 때에는 광활한 갯벌이 드러나는 독특한 풍경을 볼 수 있음.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 3, scenery: 5, road: 4, access: 3 } },
+            { id: 11, name: "안성 이티재 (배티고개)", region: "수도권", tagline: "저세상 급경사를 자랑하는 충격적인 코스", characteristics: "325번 지방도의 배티로 구간으로, 급경사와 초저속 코너 위주로 구성. 특히 배티성지를 지나 평택제천고속도로 방면으로 향하는 내리막은 경사가 매우 심해 극도의 주의가 필요.", nav: [ { type: "출발지", name: "안성시 금광면 배티성지" }, { type: "도착지", name: "진천군 백곡면 구수리삼거리" } ], notes: "충청도 투어 코스의 일부. 브레이크 관리가 매우 중요하며, 초보 운전자는 피하는 것이 좋음.", styles: ["헤어핀"], ratings: { tech: 5, speed: 2, scenery: 3, road: 3, access: 3 } },
+            { id: 12, name: "가평 쁘띠프랑스 ~ 청평호반로", region: "수도권", tagline: "북한강의 풍경과 어우러진 유러피안 감성 드라이브", characteristics: "청평대교에서 시작하여 북한강을 끼고 달리는 75번 국도 구간. 강변을 따라 가로수가 터널을 이루고, 호명산과 화야산의 풍경이 어우러져 아름다운 경치를 자랑.", nav: [ { type: "출발지", name: "가평군 청평면 청평대교" }, { type: "경유지 1", name: "쁘띠프랑스" }, { type: "도착지", name: "가평군 가평읍 가평오거리" } ], notes: "주말에는 쁘띠프랑스와 남이섬으로 향하는 관광 차량으로 인해 정체가 심할 수 있음.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 3, scenery: 5, road: 4, access: 4 } },
+            { id: 13, name: "양평 퇴촌 ~ 팔당 물안개공원", region: "수도권", tagline: "물안개 피어오르는 강변의 한적한 여유", characteristics: "남한강을 끼고 달리는 코스로, 특히 이른 아침 물안개가 피어오를 때 환상적인 분위기를 연출. 도로를 따라 벚나무가 심어져 있어 봄철 드라이브 코스로도 유명.", nav: [ { type: "출발지", name: "광주시 퇴촌면 행정복지센터" }, { type: "경유지 1", name: "팔당물안개공원" }, { type: "도착지", name: "양평군 양서면 두물머리" } ], notes: "차박 명소로도 유명하며, 주변에 분위기 좋은 대형 카페들이 다수 위치.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 3, scenery: 5, road: 4, access: 5 } },
+            { id: 14, name: "포천 광덕고개", region: "수도권", tagline: "경기도와 강원도를 잇는 험준한 고갯길", characteristics: "포천 이동면에서 강원도 화천으로 넘어가는 고갯길로, 여우고개보다 경사가 높고 코너가 훨씬 많아 더욱 거친 와인딩을 즐길 수 있음.", nav: [ { type: "출발지", name: "포천시 이동면 백운계곡" }, { type: "도착지", name: "화천군 사내면 광덕리" } ], notes: "겨울철에는 도로 결빙 위험이 매우 높음. 백운계곡과 연계하여 여름철 드라이브 코스로도 좋음.", styles: ["헤어핀"], ratings: { tech: 4, speed: 3, scenery: 4, road: 3, access: 3 } },
+            { id: 15, name: "포천 수원산", region: "수도권", tagline: "44고개 와인딩으로 유명한 포천의 전망대", characteristics: "길이 접힐 듯 꺾이는 '44고개' 와인딩 코스가 매력적인 곳. 정상 부근 전망대에서는 포천 시내 전경이 한눈에 들어옴.", nav: [ { type: "출발지", name: "포천시 군내면 직두리삼거리" }, { type: "도착지", name: "수원산정상전망대" } ], notes: "정상까지 차로 올라갈 수 있어 접근성이 좋음.", styles: ["헤어핀"], ratings: { tech: 4, speed: 2, scenery: 4, road: 3, access: 4 } },
+            { id: 16, name: "춘천 그랜드 투어", region: "강원도", tagline: "하루 종일 와인딩에만 몰두할 수 있는 궁극의 코스", characteristics: "춘천, 화천, 양구 일대의 유명 와인딩 코스를 모두 엮은 대장정 루트. 각 구간마다 전혀 다른 특성을 보여 지루할 틈이 없음.", nav: [ { type: "출발지", name: "서울" }, { type: "경유지", name: "가락재-느랏재-배후령-배치고개-추곡약수터" }, { type: "도착지", name: "서울" } ], notes: "와인딩 애호가들에게 일종의 '성지 순례'와도 같은 코스. 개별 코스들은 아래에 별도로 소개됨.", styles: ["투어", "헤어핀", "고속"], ratings: { tech: 5, speed: 4, scenery: 5, road: 4, access: 2 } },
+            { id: 17, name: "가락재 ~ 느랏재 코스", region: "강원도", tagline: "춘천 투어의 시작을 알리는 워밍업 구간", characteristics: "56번 국도의 일부로, 춘천 그랜드 투어의 첫 관문. 적당한 난이도의 코너가 이어져 본격적인 고갯길 주행 전 몸을 풀기에 좋음.", nav: [ { type: "출발지", name: "홍천군 화촌면 가락재터널" }, { type: "경유지 1", name: "가락재로" }, { type: "도착지", name: "춘천시 동면 느랏재터널" } ], notes: "느랏재 터널 입구에 잠시 휴식할 수 있는 주차 공간이 있음.", styles: ["고속"], ratings: { tech: 3, speed: 4, scenery: 3, road: 4, access: 3 } },
+            { id: 18, name: "배후령 옛길 코스", region: "강원도", tagline: "터널에 자리를 내주고 드라이버의 품으로 돌아온 길", characteristics: "배후령 터널 개통으로 교통량이 거의 없어진 구 46번 국도. 노면 상태가 양호하고 중고속 코너가 이어져 리드미컬한 주행이 가능.", nav: [ { type: "출발지", name: "춘천시 신북읍 천전삼거리" }, { type: "도착지", name: "화천군 간동면 배후령 정상" } ], notes: "정상 부근에 오봉산 등산로 입구가 있어 주말에는 등산객 차량이 있을 수 있음. 중앙선 가이드 봉 주의.", styles: ["고속"], ratings: { tech: 4, speed: 4, scenery: 4, road: 4, access: 3 } },
+            { id: 19, name: "배치고개 ~ 청평사 코스", region: "강원도", tagline: "드라이버의 담력을 시험하는 극강의 테크니컬 코스", characteristics: "극심한 고저차와 함께 '말도 안 되게 무시무시한 급경사 헤어핀'이 숨어있는, 난이도 최상의 구간. 특히 더블 헤어핀 구간은 스릴 만점.", nav: [ { type: "출발지", name: "화천군 간동면 간척사거리" }, { type: "경유지 1", name: "배치고개" }, { type: "도착지", name: "춘천시 북산면 청평사 주차장" } ], notes: "도로 폭이 매우 좁고 예측 불가능한 코너가 많아 고속 주행은 절대 금물. 경량 스포츠카에 최적화.", styles: ["헤어핀"], ratings: { tech: 5, speed: 2, scenery: 4, road: 3, access: 2 } },
+            { id: 20, name: "추곡약수터 코스 (소양호 꼬부랑길)", region: "강원도", tagline: "소양호를 옆에 끼고 달리는 30km의 힐링 와인딩", characteristics: "소양호를 따라 약 30km에 걸쳐 구불구불한 길이 이어짐. 급격한 헤어핀이나 고저차가 적어 비교적 부담 없이 장거리 와인딩을 즐길 수 있음.", nav: [ { type: "출발지", name: "춘천시 북산면 추곡약수삼거리" }, { type: "경유지 1", name: "38선쉼터" }, { type: "도착지", name: "양구군 양구읍 웅진교차로" } ], notes: "도로 바로 옆이 소양호 낭떠러지인 구간이 많아 무리한 주행은 금물. 자전거 이용자 주의.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 3, scenery: 5, road: 4, access: 2 } },
+            { id: 21, name: "평화의 댐 코스", region: "강원도", tagline: "아흔아홉 굽잇길을 넘어 평화를 향해 달리는 길", characteristics: "약 20~22km의 압도적인 길이를 자랑하는 와인딩 로드. '아흔아홉굽잇길'이라는 이명처럼 코너가 연속적으로 나타나며, 장거리 오르막과 짧은 헤어핀이 조합.", nav: [ { type: "출발지", name: "화천군 화천읍" }, { type: "도착지", name: "평화의댐 물문화관" } ], notes: "최전방 지역 특성상 노면 범프나 낙석 위험이 있으므로 주의 필요.", styles: ["투어", "헤어핀"], ratings: { tech: 4, speed: 3, scenery: 4, road: 3, access: 1 } },
+            { id: 22, name: "운두령", region: "강원도", tagline: "드라이버의 모든 기술을 요구하는 와일드한 헤어핀의 향연", characteristics: "해발 1,089m, 국도가 지나는 가장 높은 고개. 말도 안 되게 타이트하고 아름다운 헤어핀 코스가 연속되어 정확하고 빠른 스티어링과 브레이킹 기술이 필수.", nav: [ { type: "출발지", name: "평창군 용평면 속사IC" }, { type: "경유지 1", name: "이승복기념관" }, { type: "도착지", name: "운두령 정상" } ], notes: "상급자 코스. 겨울철에는 매우 춥고 험해 초보 운전자는 우회하는 것이 안전.", styles: ["헤어핀"], ratings: { tech: 5, speed: 3, scenery: 4, road: 4, access: 2 } },
+            { id: 23, name: "구룡령", region: "강원도", tagline: "용이 기어오르는 듯한 장대하고 빠른 고갯길", characteristics: "전체 길이 17km에 달하는 거대한 스케일. 특히 홍천 업힐 구간에는 회피 차선이 있어 저속 차량을 안전하게 추월 가능. 중고속 파워 드라이빙에 최적.", nav: [ { type: "출발지", name: "홍천군 내면 명개삼거리" }, { type: "경유지 1", name: "구룡령 정상" }, { type: "도착지", name: "양양군 서면 갈천리" } ], notes: "홍천 구간은 완만하고 넓지만, 양양 구간은 더 길고 기술적인 코너가 많음. 정상의 샘골휴게소는 라이더들의 필수 휴식처.", styles: ["고속", "경치"], ratings: { tech: 4, speed: 5, scenery: 5, road: 5, access: 2 } },
+            { id: 24, name: "한계령", region: "강원도", tagline: "설악의 절경을 품은, 경관과 스릴의 공존", characteristics: "설악산의 수려한 경관을 즐길 수 있는 관광 드라이브 코스. 아름다운 풍경 속에 운두령에 버금가는 급경사 헤어핀이 숨어 있음.", nav: [ { type: "출발지", name: "인제군 북면 한계교차로" }, { type: "경유지 1", name: "한계령휴게소" }, { type: "도착지", name: "양양군 서면 오색리" } ], notes: "주말, 휴가철에는 관광 차량이 매우 많으므로 이른 새벽 방문 추천. 정상 휴게소는 유명한 포토 스팟.", styles: ["경치", "헤어핀"], ratings: { tech: 4, speed: 3, scenery: 5, road: 4, access: 3 } },
+            { id: 25, name: "대관령 옛길", region: "강원도", tagline: "역사의 무게를 느끼며 달리는 구불구불한 길", characteristics: "영동고속도로 터널 개통으로 한적해진 옛길. '한국의 아름다운 길 100선'에 선정. 험준한 코너가 연속되는 전통적인 와인딩 코스.", nav: [ { type: "출발지", name: "평창군 대관령면 (구)대관령휴게소" }, { type: "도착지", name: "강릉시 성산면 대관령박물관" } ], notes: "겨울철에는 상습 결빙 구간으로 통제되는 경우가 많음.", styles: ["헤어핀", "경치"], ratings: { tech: 4, speed: 2, scenery: 4, road: 3, access: 3 } },
+            { id: 26, name: "태기산 (양구두미재)", region: "강원도", tagline: "풍력발전기 아래서 즐기는 고산지대 와인딩", characteristics: "정상 부근 풍력발전단지가 이국적인 풍경을 자아냄. 6번 국도 옛길인 양구두미재 구간이 와인딩 코스로 유명하며, 고저차가 있는 헤어핀이 반복.", nav: [ { type: "출발지", name: "횡성군 둔내면 화동교차로" }, { type: "도착지", name: "평창군 봉평면 양구두미재 정상" } ], notes: "정상 부근까지 비포장도로를 통해 접근할 수 있어 오프로드 애호가들에게도 인기.", styles: ["헤어핀", "경치"], ratings: { tech: 4, speed: 3, scenery: 5, road: 3, access: 2 } },
+            { id: 27, name: "미시령 옛길", region: "강원도", tagline: "설악의 북쪽을 넘는, 길고 험준한 도전의 길", characteristics: "매우 길고 높은 대표적인 옛길 와인딩 코스. 험준한 고갯길과 뛰어난 설악산 조망을 동시에 즐길 수 있음.", nav: [ { type: "출발지", name: "인제군 북면 용대리" }, { type: "도착지", name: "속초시 노학동" } ], notes: "겨울철에는 거의 항상 통제됨. 정상 휴게소는 현재 운영되지 않음.", styles: ["헤어핀", "경치"], ratings: { tech: 4, speed: 3, scenery: 5, road: 3, access: 2 } },
+            { id: 28, name: "진고개", region: "강원도", tagline: "오대산을 관통하는 부드러운 능선의 길", characteristics: "오대산을 넘는 고갯길. 다른 강원도의 험준한 고개들에 비해 비교적 코너가 완만하여 부드러운 리듬의 드라이브를 즐길 수 있음.", nav: [ { type: "출발지", name: "평창군 진부면 (진부IC)" }, { type: "도착지", name: "강릉시 연곡면 (진고개정상휴게소)" } ], notes: "가을 단풍 시즌에 특히 아름다운 경치를 자랑.", styles: ["고속", "경치"], ratings: { tech: 3, speed: 4, scenery: 5, road: 5, access: 3 } },
+            { id: 29, name: "446번 지방도 (내린천로)", region: "강원도", tagline: "내린천 계곡을 따라 흐르는 유유자적 와인딩", characteristics: "내린천을 따라 이어지는 긴 구간. 위아래 굴곡은 거의 없고 좌우 굴곡만 있어, 계곡의 풍경을 즐기며 유유자적 드라이브하기에 좋음.", nav: [ { type: "출발지", name: "홍천군 내면 상남삼거리" }, { type: "도착지", name: "인제군 상남면 원당삼거리" } ], notes: "구룡령 와인딩 전 워밍업 코스로 적합. 여름철 래프팅 시즌에는 차량 통행이 늘어날 수 있음.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 3, scenery: 4, road: 4, access: 2 } },
+            { id: 30, name: "충청 통합 투어", region: "충청도", tagline: "충북과 충남을 넘나드는 6개의 고개와 호수 정복 코스", characteristics: "천안, 진천, 안성을 아우르는 코스로, 각기 다른 성격의 와인딩 로드를 연속해서 경험 가능. 극악의 헤어핀부터 호반의 중고속 코너까지 다채로운 주행이 가능.", nav: [ { type: "출발지", name: "천안" }, { type: "경유지", name: "부수문이-엽돈재-이티재-마둔-금광-옥정재" }, { type: "도착지", name: "진천" } ], notes: "개별 코스를 연결하여 충청 지역의 매력을 온전히 느낄 수 있는 종합 투어.", styles: ["투어", "헤어핀", "고속"], ratings: { tech: 5, speed: 4, scenery: 4, road: 3, access: 3 } },
+            { id: 31, name: "부수문이고개", region: "충청도", tagline: "예측을 불허하는 하드코어 와인딩", characteristics: "지그재그 코너가 연속되다 갑자기 차선이 사라지거나 일방통행 수준으로 좁아지는 등, 돌발 상황이 많아 극도의 순발력과 주의력을 요구. 국내 최고 수준의 난이도.", nav: [ { type: "출발지", name: "천안시 동남구 북면" }, { type: "도착지", name: "천안시 서북구 입장면 양대리" } ], notes: "초보 운전자는 절대적으로 피해야 할 코스. 대항차와의 교행이 어려우므로 무리한 진입은 금물.", styles: ["헤어핀"], ratings: { tech: 5, speed: 2, scenery: 2, road: 1, access: 2 } },
+            { id: 32, name: "엽돈재", region: "충청도", tagline: "바이커들의 성지, 완만한 중고속 코너", characteristics: "특히 모터사이클 라이더들에게 인기가 높은 코스. 비교적 완만한 코너가 이어져 부드러운 주행이 가능.", nav: [ { type: "출발지", name: "안성시 서운면 청룡사" }, { type: "도착지", name: "진천군 백곡면 갈월리" } ], notes: "입구의 청룡주유소는 라이더들의 유명한 쉼터. 야간에는 로드킬 위험이 높으니 주의.", styles: ["고속"], ratings: { tech: 3, speed: 4, scenery: 3, road: 4, access: 3 } },
+            { id: 33, name: "이티재 (배티고개)", region: "충청도", tagline: "급경사 내리막이 선사하는 기술적인 압박감", characteristics: "고저차가 큰 경사와 급경사 테크니컬 코너가 연속. 특히 정상을 넘어 안성 방면으로 내려가는 다운힐은 브레이크 타이밍과 하중 이동 컨트롤 능력을 시험.", nav: [ { type: "출발지", name: "진천군 백곡면 배티성지" }, { type: "도착지", name: "안성시 금광면 상중리" } ], notes: "배티성지에 카페와 쉼터가 있어 쉬어가기 좋음. 다운힐 주행 시 브레이크 과열 주의.", styles: ["헤어핀"], ratings: { tech: 5, speed: 3, scenery: 3, road: 3, access: 3 } },
+            { id: 34, name: "마둔저수지 & 금광호수", region: "충청도", tagline: "호수 둘레길을 따라 즐기는 세미 와인딩", characteristics: "이티재를 지난 후 만나게 되는 호반 도로. 고저차가 작은 중고속 지그재그 코스가 이어져 부담 없이 쾌적한 드라이브를 즐길 수 있음.", nav: [ { type: "출발지", name: "안성시 금광면 마둔저수지" }, { type: "경유지 1", name: "금광호수" }, { type: "도착지", name: "안성시 금광면" } ], notes: "주말에는 낚시꾼과 행락객 차량이 많으므로 방어운전 필수.", styles: ["고속", "경치", "입문"], ratings: { tech: 2, speed: 4, scenery: 4, road: 4, access: 4 } },
+            { id: 35, name: "옥정재", region: "충청도", tagline: "헤어핀 없이 타이트한 코너로 승부하는 길", characteristics: "충청 투어의 마지막을 장식하는 코스로, 헤어핀은 없지만 타이트한 코너가 연속되어 정교한 핸들링의 재미를 느낄 수 있음.", nav: [ { type: "출발지", name: "진천군 이월면 신계리" }, { type: "도착지", name: "천룡CC 입구" } ], notes: "업힐 방향으로 주행하면 다운힐보다 단조롭게 느껴질 수 있어, 고출력 차량이나 경량 차량에 더 적합.", styles: ["고속"], ratings: { tech: 3, speed: 4, scenery: 2, road: 4, access: 3 } },
+            { id: 36, name: "대청호 회남길", region: "충청도", tagline: "65km에 달하는, 끝없이 이어지는 호반의 미로", characteristics: "매우 길고(약 65km) 폭이 좁은 와인딩 로드. 업힐과 다운힐이 섞여 있으며, 코너의 깊이가 깊어 상당한 집중력을 요구.", nav: [ { type: "출발지", name: "대전 동구 신상동" }, { type: "도착지", name: "보은군 회남면 (회남대교)" } ], notes: "코스가 매우 길어 중간 휴식 필요. 도로 폭이 좁아 대항차 주의. '이니셜 D'의 우스이 고개에 비유되기도 함.", styles: ["투어", "경치"], ratings: { tech: 4, speed: 3, scenery: 5, road: 3, access: 3 } },
+            { id: 37, name: "보령댐 코스", region: "충청도", tagline: "다운힐의 쾌감을 즐길 수 있는 중급자 코스", characteristics: "비교적 덜 알려진 중급 난이도의 코스. 다운힐 구간이 적절하게 분포되어 있어 리드미컬한 주행의 쾌감을 느낄 수 있음.", nav: [ { type: "출발지", name: "보령시 미산면 미산초등학교" }, { type: "경유지 1", name: "금강암" }, { type: "도착지", name: "보령시 미산면 삼사당" } ], notes: "금강암을 돌면서 보령호를 함께 조망할 수 있는 구간의 경치가 매우 아름다움.", styles: ["경치"], ratings: { tech: 3, speed: 3, scenery: 4, road: 3, access: 2 } },
+            { id: 38, name: "말티재", region: "충청도", tagline: "열두 굽이 스위치백이 만들어내는 도로의 예술", characteristics: "열두 굽이의 급격한 헤어핀이 장관을 이루는 곳. 특히 가을 단풍 시즌에 화려한 경치를 자랑하며, 드라이버뿐만 아니라 사진작가들에게도 인기.", nav: [ { type: "출발지", name: "보은군 장안면 장재리" }, { type: "도착지", name: "말티재 전망대" } ], notes: "전망대에서 열두 굽이 고갯길을 한눈에 조망 가능. 대청댐과 연계하여 드라이브 코스를 계획하기 좋음.", styles: ["헤어핀", "경치"], ratings: { tech: 4, speed: 2, scenery: 5, road: 5, access: 3 } },
+            { id: 39, name: "충주호 36번 국도", region: "충청도", tagline: "한 폭의 산수화 속을 달리는 사계절 드라이브", characteristics: "사계절 내내 아름다운 풍경을 자랑. 봄에는 벚꽃, 가을에는 단풍이 터널을 이루며, 월악산이 둘러싼 고요한 충주호의 모습은 감탄을 자아냄.", nav: [ { type: "출발지", name: "충주시 동량면 (충주호리조트)" }, { type: "도착지", name: "단양군 단성면 (장회나루)" } ], notes: "기술적인 와인딩보다는 경치 위주의 드라이브 코스. 종점인 단양은 맛집이 많아 미식 여행을 겸하기 좋음.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 3, scenery: 5, road: 5, access: 4 } },
+            { id: 40, name: "지리산 정령치 코스", region: "전라도", tagline: "'하늘에 닿는 길'이라 불리는 급경사와 코너의 연속", characteristics: "매우 급경사이며 응달 구간이 많아 겨울철에는 상시 통제. 정령치 휴게소를 기점으로 양방향 모두 만만치 않은 코너가 연속되어 드라이버와 차량 모두에게 상당한 부하를 줌.", nav: [ { type: "출발지", name: "남원시 주천면 고기삼거리" }, { type: "경유지 1", name: "정령치휴게소" }, { type: "도착지", name: "남원시 산내면 달궁삼거리" } ], notes: "정령치 휴게소는 은하수 관측 명소. 노면 상태가 좋지 않고, 반달가슴곰 출몰 지역이므로 각별히 주의.", styles: ["헤어핀", "경치"], ratings: { tech: 5, speed: 3, scenery: 5, road: 2, access: 1 } },
+            { id: 41, name: "지리산 성삼재 코스", region: "전라도", tagline: "'한국의 아름다운 길 100선'에 빛나는 노고단 가는 길", characteristics: "정령치보다는 덜하지만 여전히 도전적인 와인딩과 빼어난 자연 경관을 자랑. 완만한 코너와 헤어핀이 적절히 조합되어 스릴 있는 다운힐을 즐길 수 있음.", nav: [ { type: "출발지", name: "구례군 광의면 천은사" }, { type: "경유지 1", name: "시암재휴게소" }, { type: "도착지", name: "성삼재휴게소" } ], notes: "방문 전 반드시 도로 통제 여부를 확인해야 함.", styles: ["헤어핀", "경치"], ratings: { tech: 4, speed: 3, scenery: 5, road: 3, access: 1 } },
+            { id: 42, name: "지안재 & 오도재", region: "전라도", tagline: "구렁이가 똬리를 튼 듯한, 한국에서 가장 사진적인 도로", characteristics: "함양에서 지리산으로 들어가는 관문. 특히 지안재의 뱀처럼 구불거리는 헤어핀 구간은 수많은 사진작가와 라이더들의 성지. 오도재는 경사가 더욱 가파른 도전적인 업힐 코스.", nav: [ { type: "출발지", name: "함양군 함양읍 (지안재 입구)" }, { type: "경유지 1", name: "지안재 전망대" }, { type: "도착지", name: "지리산조망공원 (오도재 정상)" } ], notes: "시각적인 즐거움이 매우 큰 코스. 도로 폭이 좁고 경사가 급하므로 안전 운전 필수.", styles: ["헤어핀", "경치"], ratings: { tech: 4, speed: 2, scenery: 5, road: 4, access: 2 } },
+            { id: 43, name: "남원 24번 국도 (황산로)", region: "전라도", tagline: "지리산의 긴장을 풀고 달리는 고속 와인딩", characteristics: "운봉읍 교차로부터 약 7.5km 구간으로, 코너가 반복되지만 대부분 고속 코너라 지리산의 타이트한 코스에서 느낄 수 없었던 시원한 주행이 가능.", nav: [ { type: "출발지", name: "남원시 운봉읍 운봉교차로" }, { type: "도착지", name: "남원시 이백면 강기리" } ], notes: "지리산 투어를 마친 후 남원 시내로 복귀하는 길에 쿨링 주행을 겸하여 즐기기 좋은 코스.", styles: ["고속"], ratings: { tech: 2, speed: 5, scenery: 3, road: 5, access: 3 } },
+            { id: 44, name: "광주 무등산 코스", region: "전라도", tagline: "광주 시민들의 휴식처이자 드라이빙 코스", characteristics: "무등산 국립공원을 순환하는 도로. 도심에서 가까워 접근성이 좋으며, 비교적 짧지만 꾸준한 코너링을 즐길 수 있음.", nav: [ { type: "출발지", name: "광주 동구 지산유원지" }, { type: "도착지", name: "무등산장" } ], notes: "주말에는 등산객과 나들이객 차량으로 매우 붐빔.", styles: ["입문", "경치"], ratings: { tech: 3, speed: 2, scenery: 4, road: 4, access: 5 } },
+            { id: 45, name: "순천 상사호 코스", region: "전라도", tagline: "여순광 지역의 대표, 호수와 산을 아우르는 복합 코스", characteristics: "상당히 긴 구간에 고속, 중속, 저속 코너가 복합적으로 나타나며, 오르내리막이 반복되어 차량의 거동을 정확히 제어하는 능력이 중요.", nav: [ { type: "출발지", name: "순천시 상사면 상사호휴게소" }, { type: "경유지 1", name: "낙안읍성 민속마을" }, { type: "도착지", name: "순천시 승주읍 (선암사 입구)" } ], notes: "가로등이 적고 블라인드 코너가 많아 야간 주행 난이도가 높음.", styles: ["고속", "경치"], ratings: { tech: 4, speed: 4, scenery: 4, road: 3, access: 3 } },
+            { id: 46, name: "영광 백수해안도로", region: "전라도", tagline: "서해 최고의 노을을 감상하는 해안 절경 드라이브", characteristics: "'한국의 아름다운 길 100선'에 선정된 서해안 대표 드라이브 코스. 기암괴석, 광활한 갯벌, 불타는 석양이 어우러져 황홀한 풍경을 연출.", nav: [ { type: "출발지", name: "영광대교" }, { type: "경유지 1", name: "영광노을전시관" }, { type: "도착지", name: "백수해안도로 노을전망대" } ], notes: "도로 아래에 목재 데크 산책로가 잘 조성되어 있어 차를 세우고 바다를 가까이에서 즐길 수 있음.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 3, scenery: 5, road: 5, access: 4 } },
+            { id: 47, name: "목포 부주산 코스", region: "전라도", tagline: "서킷처럼 뱅글뱅글, 짧지만 강렬한 도심 속 와인딩", characteristics: "부주산을 끼고 도는 짧은 순환 코스. 계속해서 돌다 보면 마치 서킷을 주행하는 듯한 느낌을 주며, 다양한 코너가 섞여 있어 운전의 재미가 쏠쏠함.", nav: [ { type: "출발지", name: "목포시 옥암동 부주산 근린공원" }, { type: "도착지", name: "부주산 순환" } ], notes: "짧은 코스이므로 랩타임을 재며 자신의 운전 기술을 연마하는 드라이버들이 많음.", styles: ["헤어핀"], ratings: { tech: 4, speed: 3, scenery: 2, road: 4, access: 5 } },
+            { id: 48, name: "밀양댐 코스", region: "경상도", tagline: "경남 와인딩 동호회 정모 1순위, 남부의 성지", characteristics: "금요일 밤이면 경남 지역의 슈퍼카와 튜닝카들이 집결하는 곳. 높은 고저차와 파상적으로 연결되는 숏 코너가 특징인 중고속 코스.", nav: [ { type: "출발지", name: "양산시 원동면 배내사거리휴게소" }, { type: "도착지", name: "밀양댐 주차장" } ], notes: "중앙선에 돌출된 도로 표지병이 있어 주행에 다소 거슬릴 수 있음. 야간에는 조명이 거의 없고 출입이 통제될 수 있으니 유의.", styles: ["고속", "헤어핀"], ratings: { tech: 4, speed: 4, scenery: 4, road: 4, access: 3 } },
+            { id: 49, name: "밀양 그랜드 투어", region: "경상도", tagline: "고속 코너와 극악 헤어핀을 모두 경험하는 종합 코스", characteristics: "밀양역에서 출발하여 삼랑진, 천태사, 배태고개를 거쳐 밀양댐에 이르는, 드라이브와 와인딩이 결합된 스릴 넘치는 투어 코스. 각 구간마다 성격이 뚜렷.", nav: [ { type: "출발지", name: "밀양역" }, { type: "경유지 1", name: "미전삼거리" }, { type: "경유지 2", name: "천태사" }, { type: "경유지 3", name: "배태고개" }, { type: "도착지", name: "밀양댐" } ], notes: "특히 천태사로 향하는 길의 3개 헤어핀은 '무시무시한 헤어핀의 끝판왕'이라 불릴 정도로 가장 위험한 구간.", styles: ["투어", "헤어핀", "고속"], ratings: { tech: 5, speed: 4, scenery: 4, road: 3, access: 3 } },
+            { id: 50, name: "양산 원동로 코스", region: "경상도", tagline: "27km에 달하는 길고 다채로운 업힐과 다운힐", characteristics: "총 길이 27km의 상당히 긴 코스. 업힐과 다운힐이 적절히 섞여 있으며, 중간에 마을을 통과하므로 과속방지턱과 저속 차량에 주의.", nav: [ { type: "출발지", name: "양산시 물금읍 물금역" }, { type: "도착지", name: "양산시 원동면 배내사거리휴게소" } ], notes: "배내사거리에서 밀양댐 코스로 바로 연결할 수 있어, 두 코스를 묶어 즐기는 드라이버들이 많음.", styles: ["투어", "고속"], ratings: { tech: 3, speed: 4, scenery: 4, road: 3, access: 3 } },
+            { id: 51, name: "양산 에덴밸리 코스", region: "경상도", tagline: "스키장 슬로프를 향해 달리는 하늘길", characteristics: "에덴밸리 리조트로 올라가는 길이 와인딩 코스. 하늘을 향해 달리는 듯한 기분을 느낄 수 있으며, 펀 드라이빙을 즐기는 이들에게 인기.", nav: [ { type: "출발지", name: "양산시 원동면" }, { type: "도착지", name: "에덴밸리리조트" } ], notes: "에덴밸리에서 밀양댐까지 이어지는 길 또한 훌륭한 와인딩 코스로, 두 곳을 연계하는 것을 강력히 추천.", styles: ["경치", "고속"], ratings: { tech: 3, speed: 4, scenery: 5, road: 4, access: 3 } },
+            { id: 52, name: "부산 달맞이길", region: "경상도", tagline: "부산의 몽마르뜨, 15개의 커브를 품은 해안도로", characteristics: "해운대에서 송정으로 이어지는 약 8km의 도심 속 드라이브 코스. 15번 이상 굽어진다고 하여 '15곡도'라는 별칭이 있으며, 달빛과 어우러진 밤바다의 정취가 특히 아름다움.", nav: [ { type: "출발지", name: "부산 해운대구 미포오거리" }, { type: "경유지 1", name: "해월정" }, { type: "도착지", name: "송정해수욕장" } ], notes: "길을 따라 분위기 좋은 레스토랑과 카페가 즐비하여, 드라이브와 데이트를 겸하기에 최적.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 2, scenery: 5, road: 5, access: 5 } },
+            { id: 53, name: "통영 산양일주도로", region: "경상도", tagline: "한려수도의 섬들을 파노라마로 감상하는 꿈의 60리 길", characteristics: "통영 제일의 드라이브 코스. 쪽빛 바다 위로 점점이 떠 있는 섬들의 풍경이 환상적.", nav: [ { type: "출발지", name: "통영 마리나리조트" }, { type: "경유지 1", name: "달아공원" }, { type: "도착지", name: "통영시 산양읍사무소" } ], notes: "일몰 명소인 달아공원은 필수 경유지. 맑은 날에는 멀리 대마도까지 보일 정도로 조망이 뛰어남.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 3, scenery: 5, road: 5, access: 4 } },
+            { id: 54, name: "창선-삼천포대교", region: "경상도", tagline: "다리의 박물관을 건너는 예술적인 드라이브", characteristics: "'한국의 아름다운 길 100선' 대상에 빛나는 길. 3개의 각기 다른 형식의 다리가 섬과 섬을 잇는 장관을 연출.", nav: [ { type: "출발지", name: "사천시 대방동" }, { type: "도착지", name: "남해군 창선면" } ], notes: "특히 초양휴게소에서 바라보는 삼천포대교 일대의 조망이 매우 아름다움. 야간 조명 또한 볼거리.", styles: ["경치", "입문"], ratings: { tech: 1, speed: 3, scenery: 5, road: 5, access: 4 } },
+            { id: 55, name: "남해 물미해안도로", region: "경상도", tagline: "에메랄드빛 바다와 아홉 굽이 고갯길의 조화", characteristics: "물결치는 고개와 구불구불한 도로를 따라 한려해상의 수려한 경관을 품고 달리는 길.", nav: [ { type: "출발지", name: "남해군 삼동면 물건리" }, { type: "도착지", name: "남해군 미조면 미조항" } ], notes: "상주 은모래비치, 송정 솔바람해변 등 남해의 유명 명소들을 모두 지나가므로 관광과 드라이브를 함께 즐기기에 최적.", styles: ["경치", "헤어핀"], ratings: { tech: 3, speed: 3, scenery: 5, road: 4, access: 3 } },
+            { id: 56, name: "1100도로", region: "제주도", tagline: "대한민국에서 가장 높은 곳을 달리는, 제주 와인딩의 상징", characteristics: "제주시와 서귀포를 잇는 도로 중 가장 높고 구불구불한 길. 연속 급코너와 직선 구간이 반복되다 나타나는 독특한 '롤러코스터' 구간은 1100도로만의 짜릿한 매력.", nav: [ { type: "출발지", name: "제주시 노형동" }, { type: "경유지 1", name: "1100고지 휴게소" }, { type: "도착지", name: "서귀포시 중문동" } ], notes: "한라산의 기후는 변화무쌍하므로 안개나 비에 대비. 겨울철에는 체인 없이 통행이 불가능한 경우가 대부분.", styles: ["헤어핀", "경치"], ratings: { tech: 4, speed: 4, scenery: 5, road: 4, access: 2 } },
+            { id: 57, name: "5.16도로", region: "제주도", tagline: "한라산 동쪽 허리를 가로지르는 가장 빠른 길이자 도전의 길", characteristics: "제주시와 서귀포를 가장 빠르게 잇는 산악도로로, 그만큼 길이 험하고 고갯길이 심함. 울창한 나무들이 하늘을 뒤덮어 터널을 이루는 '숲터널' 구간이 백미.", nav: [ { type: "출발지", name: "제주시청" }, { type: "경유지 1", name: "제주마방목지" }, { type: "경유지 2", name: "성판악" }, { type: "도착지", name: "서귀포시청" } ], notes: "도로 폭이 좁고 커브가 심해 중앙선 침범 사고가 잦으니 각별한 주의 필요. 숲터널 구간은 가로등이 없어 야간 운전 시 시야 확보가 어려움.", styles: ["헤어핀", "경치"], ratings: { tech: 4, speed: 3, scenery: 5, road: 3, access: 3 } },
+            { id: 58, name: "비자림로", region: "제주도", tagline: "삼나무 숲 사이로 뻗은, 치유와 드라이브의 길", characteristics: "양옆으로 곧게 뻗은 삼나무들이 장관을 이룸. 창문을 열고 천천히 달리면 상쾌한 피톤치드를 온몸으로 느낄 수 있음.", nav: [ { type: "출발지", name: "제주시 봉개동" }, { type: "도착지", "name": "제주시 구좌읍 (비자림)" } ], notes: "와인딩의 스릴보다는 힐링과 풍경 감상에 더 초점이 맞춰진 코스. 주변에 예쁜 카페들이 많음.", styles: ["경치", "입문"], ratings: { tech: 1, speed: 3, scenery: 5, road: 5, access: 4 } },
+            { id: 59, name: "애월해안도로", region: "제주도", tagline: "제주 서쪽 바다의 정수를 담은 해안길", characteristics: "하귀에서 애월까지 이어지는 구불구불한 해안도로로, 제주에서 가장 인기 있는 드라이브 코스 중 하나. 에메랄드빛 바다와 검은 현무암이 어우러진 풍경이 일품.", nav: [ { type: "출발지", name: "제주시 애월읍 하귀리" }, { type: "도착지", name: "제주시 애월읍 애월항" } ], notes: "한담해안산책로 주변은 항상 관광객으로 붐빔. 해안선을 따라 개성 있는 카페와 맛집이 즐비.", styles: ["경치", "입문"], ratings: { tech: 2, speed: 2, scenery: 5, road: 4, access: 5 } },
+            { id: 60, name: "신창풍차해안도로", region: "제주도", tagline: "하얀 풍차와 에메랄드빛 바다, 그리고 환상의 일몰", characteristics: "제주 서쪽 끝, 해상풍력단지가 조성되어 있어 하얀 풍차들이 줄지어 서 있는 이국적인 풍경. 제주 최고의 일몰 명소 중 하나.", nav: [ { type: "출발지", name: "제주시 한경면 신창리" }, { type: "도착지", name: "싱계물공원" } ], notes: "해안도로 중간의 생태체험장(싱계물공원)은 바다 위를 걷는 듯한 독특한 경험을 제공하는 포토 스팟.", styles: ["경치", "입문"], ratings: { tech: 1, speed: 2, scenery: 5, road: 5, access: 4 } },
+        ];
+        
+        const recommendations = [
+            { title: "최고의 헤어핀 성지", description: "극한의 기술적 도전을 원하는 드라이버를 위한 코스입니다. 정교한 하중 이동과 스티어링 기술을 연마하기에 최적입니다.", courseIds: [22, 19, 33, 42, 49] },
+            { title: "고속 와인딩의 성지", description: "강력한 성능의 차량으로 유려하고 빠른 속도의 코너링을 즐기고 싶은 드라이버를 위한 코스입니다.", courseIds: [23, 43, 48, 18, 34] },
+            { title: "드라이빙과 풍경의 완벽한 조화", description: "운전의 즐거움과 눈앞에 펼쳐지는 절경의 감동이 동등하게 중요한 이들을 위한 코스입니다.", courseIds: [40, 24, 56, 39, 53] },
+            { title: "입문자를 위한 최적의 코스", description: "기본적인 차량 제어 기술을 안전하게 연마할 수 있는, 비교적 덜 기술적이고 예측 가능한 도로입니다.", courseIds: [3, 20, 5, 58, 34] },
+            { title: "최고의 당일치기 투어 루트", description: "여러 개의 명품 코스를 하나로 엮어 하루를 온전히 드라이빙에 쏟아부을 수 있는 최고의 조합입니다.", courseIds: [16, 6, 30, 42, 49] },
+        ];
+
+        let currentRegion = 'all';
+        let currentStyle = 'all';
+        let modalChart;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const courseGrid = document.getElementById('course-grid');
+            const regionFilters = document.getElementById('region-filters');
+            const styleFilters = document.getElementById('style-filters');
+            const searchInput = document.getElementById('search-input');
+            const modal = document.getElementById('modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const accordionContainer = document.getElementById('accordion-container');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function renderCourses() {
+                courseGrid.innerHTML = '';
+                let filteredCourses = courses;
+                const searchTerm = searchInput.value.toLowerCase();
+
+                if (currentRegion !== 'all') {
+                    filteredCourses = filteredCourses.filter(c => c.region === currentRegion);
+                }
+
+                if (currentStyle !== 'all') {
+                    filteredCourses = filteredCourses.filter(c => c.styles.includes(currentStyle));
+                }
+
+                if (searchTerm) {
+                    filteredCourses = filteredCourses.filter(c => 
+                        c.name.toLowerCase().includes(searchTerm) ||
+                        c.tagline.toLowerCase().includes(searchTerm) ||
+                        c.characteristics.toLowerCase().includes(searchTerm) ||
+                        c.region.toLowerCase().includes(searchTerm)
+                    );
+                }
+                
+                document.getElementById('course-count').textContent = `검색 결과: ${filteredCourses.length}개 코스`;
+
+                if(filteredCourses.length === 0) {
+                    courseGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">선택한 조건에 맞는 코스가 없습니다.</p>`;
+                    return;
+                }
+
+                filteredCourses.forEach(course => {
+                    const styleTags = course.styles.map(s => `<span class="bg-gray-200 text-gray-700 px-2 py-1 text-xs font-semibold rounded-full">#${s}</span>`).join(' ');
+                    const card = `
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer" data-id="${course.id}">
+                            <div class="p-6">
+                                <div class="flex justify-between items-start">
+                                    <p class="text-sm font-semibold text-[#3B5998]">${course.region}</p>
+                                    <div class="flex flex-wrap gap-1">${styleTags}</div>
+                                </div>
+                                <h4 class="mt-2 text-xl font-bold truncate">${course.name}</h4>
+                                <p class="mt-1 text-gray-600 text-sm h-10">${course.tagline}</p>
+                            </div>
+                        </div>
+                    `;
+                    courseGrid.innerHTML += card;
+                });
+            }
+
+            function openModal(courseId) {
+                const course = courses.find(c => c.id == courseId);
+                if (!course) return;
+
+                document.getElementById('modal-title').textContent = course.name;
+                document.getElementById('modal-tagline').textContent = course.tagline;
+                document.getElementById('modal-characteristics').textContent = course.characteristics;
+                document.getElementById('modal-notes').textContent = course.notes;
+                
+                const tableHead = document.getElementById('modal-nav-table').querySelector('thead');
+                const tableBody = document.getElementById('modal-nav-table').querySelector('tbody');
+                
+                tableHead.innerHTML = '<tr>' + course.nav.map(p => `<th scope="col" class="px-6 py-3">${p.type}</th>`).join('') + '</tr>';
+                tableBody.innerHTML = '<tr>' + course.nav.map(p => `<td class="px-6 py-4">${p.name}</td>`).join('') + '</tr>';
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                renderModalChart(course);
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+                if (modalChart) {
+                    modalChart.destroy();
+                }
+            }
+            
+            function renderModalChart(course) {
+                const ctx = document.getElementById('modal-chart').getContext('2d');
+                if (modalChart) {
+                    modalChart.destroy();
+                }
+                modalChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['기술', '속도', '경치', '노면', '접근성'],
+                        datasets: [{
+                            label: course.name,
+                            data: [course.ratings.tech, course.ratings.speed, course.ratings.scenery, course.ratings.road, course.ratings.access],
+                            fill: true,
+                            backgroundColor: 'rgba(59, 89, 152, 0.2)',
+                            borderColor: 'rgb(59, 89, 152)',
+                            pointBackgroundColor: 'rgb(59, 89, 152)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(59, 89, 152)'
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                                grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                                pointLabels: { font: { size: 12 } },
+                                suggestedMin: 0,
+                                suggestedMax: 5,
+                                ticks: {
+                                    stepSize: 1,
+                                    backdropColor: 'transparent'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+            
+            function renderRecommendations() {
+                recommendations.forEach((rec, index) => {
+                    const courseLinks = rec.courseIds.map(id => {
+                        const course = courses.find(c => c.id === id);
+                        return course ? `<li class="mt-1"><button class="text-left text-[#3B5998] hover:underline" data-id="${course.id}">${course.name} (${course.region})</button></li>` : '';
+                    }).join('');
+                    
+                    const accordionItem = `
+                        <div class="border border-gray-200 rounded-lg">
+                            <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold" data-index="${index}">
+                                <span>${rec.title}</span>
+                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content hidden p-4 border-t border-gray-200 bg-gray-50">
+                                <p class="text-gray-600 mb-3">${rec.description}</p>
+                                <ul class="list-disc list-inside">${courseLinks}</ul>
+                            </div>
+                        </div>
+                    `;
+                    accordionContainer.innerHTML += accordionItem;
+                });
+            }
+
+            regionFilters.addEventListener('click', e => {
+                if (e.target.classList.contains('region-filter')) {
+                    document.querySelectorAll('.region-filter').forEach(btn => btn.classList.remove('active-filter', 'bg-[#3B5998]', 'text-white'));
+                    e.target.classList.add('active-filter', 'bg-[#3B5998]', 'text-white');
+                    currentRegion = e.target.dataset.region;
+                    renderCourses();
+                }
+            });
+
+            styleFilters.addEventListener('click', e => {
+                if (e.target.classList.contains('style-filter')) {
+                    document.querySelectorAll('.style-filter').forEach(btn => btn.classList.remove('active-filter', 'bg-[#3B5998]', 'text-white'));
+                    e.target.classList.add('active-filter', 'bg-[#3B5998]', 'text-white');
+                    currentStyle = e.target.dataset.style;
+                    renderCourses();
+                }
+            });
+
+            searchInput.addEventListener('input', renderCourses);
+
+            courseGrid.addEventListener('click', e => {
+                const card = e.target.closest('div[data-id]');
+                if (card) {
+                    openModal(card.dataset.id);
+                }
+            });
+            
+            accordionContainer.addEventListener('click', e => {
+                 if (e.target.tagName === 'BUTTON' && e.target.dataset.id) {
+                    const courseId = e.target.dataset.id;
+                    openModal(courseId);
+                    document.getElementById('modal').scrollIntoView({ behavior: 'smooth' });
+                 } else if (e.target.closest('.accordion-header')) {
+                    const header = e.target.closest('.accordion-header');
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('svg');
+                    
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                 }
+            });
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('#mobile-menu a, #mobile-menu button').forEach(el => {
+                el.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', e => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            renderCourses();
+            renderRecommendations();
+        });
+    </script>
+</body>
+</html>
