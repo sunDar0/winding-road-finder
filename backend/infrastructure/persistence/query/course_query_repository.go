@@ -6,6 +6,8 @@ import (
 	"strings"
 	"sync"
 
+	"slices"
+
 	"github.com/sunDar0/winding-road-finder/backend/domain/course"
 )
 
@@ -22,7 +24,7 @@ func NewCourseQueryRepository() *CourseQueryRepositoryImpl {
 
 func (repo *CourseQueryRepositoryImpl) loadCourses() ([]*course.CourseAggregate, error) {
 	repo.once.Do(func() {
-		file, err := os.Open("backend/data/courses.json")
+		file, err := os.Open("data/courses.json")
 		if err != nil {
 			repo.loadErr = err
 			return
@@ -49,13 +51,7 @@ func (repo *CourseQueryRepositoryImpl) FindAll(region, style, search string) ([]
 			continue
 		}
 		if style != "" && style != "all" {
-			found := false
-			for _, s := range c.Styles {
-				if s == style {
-					found = true
-					break
-				}
-			}
+			found := slices.Contains(c.Styles, style)
 			if !found {
 				continue
 			}
