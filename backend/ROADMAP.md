@@ -16,14 +16,14 @@
 - [x] 최소 서버(main.go) 및 health 엔드포인트 구현
 
 ### 2단계: CQRS/DDD 기본 구조 구현
-- [ ] Command/Query Controller, Application, Domain, Repository 인터페이스 뼈대 작성
-- [ ] health 엔드포인트를 CQRS 구조로 분리 구현
-- [ ] 라우팅, 의존성 주입 구조 확립
+- [x] Command/Query Controller, Application, Domain, Repository 인터페이스 뼈대 작성
+- [x] 라우팅, 의존성 주입 구조 확립
 
 ### 3단계: 실제 도메인(예: Course) 설계 및 구현
-- [ ] Course 도메인 모델(애그리거트, 엔티티, 값 객체 등) 설계
-- [ ] Command/Query 서비스 및 저장소 구현
-- [ ] API 명세 및 문서화(Swagger 등)
+- [x] Course 도메인 모델(애그리거트, 엔티티, 값 객체 등) 설계
+- [x] Recommendations 도메인 모델 설계
+- [x] Command/Query 서비스 및 저장소 구현
+- [x] API 명세 및 문서화(Swagger 등)
 
 ### 4단계: 테스트 및 품질 관리
 - [ ] 계층별 단위 테스트 작성

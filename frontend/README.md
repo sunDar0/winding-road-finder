@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Winding Road Guide - Frontend
 
-## Getting Started
+와인딩 코스 추천 서비스의 프론트엔드 프로젝트입니다.
 
-First, run the development server:
+## 기술 스택
+
+- Next.js 15
+- TypeScript
+- Tailwind CSS
+- Chart.js
+- React-ChartJS-2
+- Heroicons
+
+## 시작하기
+
+### 필수 조건
+
+- Node.js 18.17 이상
+- pnpm
+
+### 설치
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 의존성 설치
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 개발 서버 실행
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 결과를 확인할 수 있습니다.
 
-## Learn More
+## 프로젝트 구조
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/              # App Router 페이지
+├── components/       # 재사용 가능한 컴포넌트
+│   ├── layout/      # 레이아웃 관련 컴포넌트
+│   ├── course/      # 코스 관련 컴포넌트
+│   ├── filter/      # 필터링 관련 컴포넌트
+│   ├── recommendation/ # 추천 관련 컴포넌트
+│   └── safety/      # 안전 수칙 관련 컴포넌트
+├── lib/             # 유틸리티 함수
+├── hooks/           # 커스텀 훅
+└── types/           # TypeScript 타입 정의
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 주요 기능
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 코스 목록 보기
+- 코스 상세 정보
+- 추천 코스 목록
+- 지역별/스타일별 필터링
+- 키워드 검색
+- 상세 정보 차트
+- 안전 수칙 안내
 
-## Deploy on Vercel
+## API 연동
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+백엔드 API 문서는 다음 URL에서 확인할 수 있습니다:
+- [Swagger UI](http://localhost:8080/swagger/index.html)
