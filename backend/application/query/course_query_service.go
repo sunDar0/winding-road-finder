@@ -18,3 +18,4 @@ func (svc *CourseQueryService) GetCourses(region, style, search string) ([]*cour
 func (svc *CourseQueryService) GetCourseByID(id int) (*course.CourseAggregate, error) {
 	return svc.repo.FindByID(id)
 } 
+
