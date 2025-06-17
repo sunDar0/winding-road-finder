@@ -1,0 +1,364 @@
+{
+    "version": "2.2.0",
+    "core": {
+        "pairProgramming": {
+            "principles": {
+                "mutualAgreement": true,
+                "stepByStep": {
+                    "problemAnalysis": true,
+                    "solutionProposal": true,
+                    "discussAndAgree": true,
+                    "implementation": true,
+                    "oneStepAtATime": true,
+                    "noSkippingSteps": true,
+                    "waitForConfirmation": true
+                },
+                "communication": {
+                    "explainBeforeChange": true,
+                    "waitForApproval": true,
+                    "discussAlternatives": true
+                },
+                "codeModification": {
+                    "minimalChange": true,
+                    "explainIntent": true,
+                    "requireApproval": true,
+                    "documentDecisions": true
+                }
+            },
+            "responseFormat": {
+                "checklistRequired": true,
+                "sections": {
+                    "ruleCheck": {
+                        "currentStage": true,
+                        "previousAgreements": true,
+                        "nextSteps": true
+                    },
+                    "stageTracking": {
+                        "analysis": "문제 분석",
+                        "proposal": "해결방안 제안",
+                        "discussion": "상호 논의/합의",
+                        "implementation": "구현"
+                    },
+                    "formatRules": {
+                        "template": [
+                            "[진행 상태]",
+                            "□ 문제 분석",
+                            "□ 해결방안 제안",
+                            "□ 상호 논의/합의",
+                            "□ 구현",
+                            "□ {필요 단계라면 추가 가능}",
+                            "현재 상태: {상세내용}",
+                            "이전 합의사항: {내용 또는 '-'}",
+                            "제안: {제안사항}"
+                        ],
+                        "highlighting": {
+                            "active": "■",
+                            "inactive": "□"
+                        },
+                        "previousAgreements": {
+                            "hasContent": "{구체적인 내용}",
+                            "noContent": "-"
+                        }
+                    }
+                },
+                "validateBeforeResponse": true
+            }
+        },
+        "versionControl": {
+            "commitMessage": {
+                "useImperative": true,
+                "translateToNative": true,
+                "conventions": {
+                    "prefixType": true,
+                    "separateBody": true,
+                    "maxLength": 72
+                }
+            },
+            "branchStrategy": {
+                "useFeatureBranches": true,
+                "usePullRequests": true,
+                "requireReviews": true
+            }
+        },
+        "codeStyle": {
+            "naming": {
+                "useConsistentCase": true,
+                "allowedAbbreviations": [
+                    "API",
+                    "URL",
+                    "ID",
+                    "IO",
+                    "DB",
+                    "DTO",
+                    "UI",
+                    "JWT"
+                ],
+                "caseStyles": {
+                    "class": "PascalCase",
+                    "function": "camelCase",
+                    "variable": "camelCase",
+                    "constant": "UPPERCASE",
+                    "file": "kebab-case"
+                }
+            },
+            "documentation": {
+                "requireAPI": true,
+                "requireComplex": true,
+                "includeExamples": true,
+                "standardFormat": true
+            },
+            "structure": {
+                "maxFileLength": 500,
+                "singleResponsibility": true,
+                "modularity": true,
+                "separationOfConcerns": true
+            },
+            "quality": {
+                "testingRequired": true,
+                "codeCoverage": {
+                    "statements": 80,
+                    "branches": 80,
+                    "functions": 90
+                },
+                "codeReview": {
+                    "requirePeerReview": true,
+                    "automatedChecks": true
+                }
+            }
+        }
+    },
+    "languages": {
+        "javascript": {
+            "principles": {
+                "useStrict": true,
+                "preferConst": true,
+                "avoidVar": true,
+                "useModules": true,
+                "modernFeatures": {
+                    "useArrowFunctions": true,
+                    "useDestructuring": true,
+                    "useSpreadOperator": true,
+                    "useOptionalChaining": true,
+                    "useNullishCoalescing": true
+                }
+            },
+            "functions": {
+                "maxInstructions": 20,
+                "pureWhenPossible": true,
+                "closures": {
+                    "properScoping": true,
+                    "avoidGlobalScope": true,
+                    "documentScope": true
+                },
+                "async": {
+                    "preferAsyncAwait": true,
+                    "handlePromiseErrors": true,
+                    "avoidCallbackHell": true
+                },
+                "naming": {
+                    "descriptive": true,
+                    "booleanPrefix": [
+                        "is",
+                        "has",
+                        "can"
+                    ],
+                    "actionPrefix": [
+                        "get",
+                        "set",
+                        "update",
+                        "delete"
+                    ]
+                }
+            },
+            "objects": {
+                "prototype": {
+                    "useClasses": true,
+                    "documentInheritance": true,
+                    "avoidPrototypePollution": true
+                },
+                "properties": {
+                    "useShorthand": true,
+                    "computedWhenNeeded": true,
+                    "descriptiveNames": true
+                },
+                "this": {
+                    "bindExplicitly": true,
+                    "useArrowForCallbacks": true,
+                    "documentContext": true
+                }
+            },
+            "bestPractices": {
+                "hoisting": {
+                    "declarationsAtTop": true,
+                    "avoidFunctionHoisting": true,
+                    "useLetConst": true
+                },
+                "types": {
+                    "useTypeChecking": true,
+                    "consistentComparisons": true,
+                    "avoidTypeCoercion": true
+                },
+                "memory": {
+                    "clearIntervals": true,
+                    "removeEventListeners": true,
+                    "avoidMemoryLeaks": true
+                }
+            },
+            "testing": {
+                "useJest": true,
+                "unitTests": true,
+                "mockingPatterns": true,
+                "coverage": {
+                    "statements": 80,
+                    "branches": 80,
+                    "functions": 90
+                }
+            }
+        },
+        "typescript": {
+            "principles": {
+                "useEnglishForCode": true,
+                "explicitTyping": true,
+                "avoidAny": true,
+                "useJsDoc": true,
+                "oneExportPerFile": true
+            },
+            "functions": {
+                "maxInstructions": 20,
+                "returnBooleanPrefix": [
+                    "is",
+                    "has",
+                    "can"
+                ],
+                "voidFunctionPrefix": [
+                    "execute",
+                    "save"
+                ],
+                "avoidNesting": true,
+                "useHigherOrderFunctions": true,
+                "arrowFunctionsForSimple": 3
+            },
+            "data": {
+                "avoidPrimitiveAbuse": true,
+                "useInternalValidation": true,
+                "preferImmutability": true
+            },
+            "classes": {
+                "followSolid": true,
+                "preferComposition": true,
+                "declareInterfaces": true,
+                "maxInstructions": 200,
+                "maxPublicMethods": 10,
+                "maxProperties": 10
+            }
+        },
+        "go": {
+            "principles": {
+                "idiomaticGo": true,
+                "explicitErrorHandling": true,
+                "avoidGlobalVars": true,
+                "useInterfaces": true,
+                "keepItSimple": true
+            },
+            "naming": {
+                "package": "lowercase",
+                "file": "snake_case",
+                "function": "camelCase",
+                "variable": "camelCase",
+                "constant": "UPPERCASE",
+                "struct": "PascalCase",
+                "interface": "PascalCase"
+            },
+            "structure": {
+                "maxFileLength": 400,
+                "singleResponsibility": true,
+                "modularity": true,
+                "separationOfConcerns": true
+            },
+            "documentation": {
+                "requireExported": true,
+                "requireComplex": true,
+                "standardFormat": true,
+                "includeExamples": true
+            },
+            "testing": {
+                "useGoTest": true,
+                "unitTests": true,
+                "mockingPatterns": true,
+                "coverage": {
+                    "statements": 80,
+                    "branches": 80,
+                    "functions": 90
+                }
+            }
+        },
+        "react": {
+            "principles": {
+                "useFunctionalComponents": true,
+                "preferHooks": true,
+                "separateLogicAndView": true,
+                "statelessWhenPossible": true
+            },
+            "structure": {
+                "componentPerFile": true,
+                "maxComponentLength": 200,
+                "modularity": true,
+                "singleResponsibility": true
+            },
+            "naming": {
+                "component": "PascalCase",
+                "file": "kebab-case",
+                "hook": "useCamelCase"
+            },
+            "documentation": {
+                "requireComplex": true,
+                "standardFormat": true,
+                "includeExamples": true
+            },
+            "testing": {
+                "useJest": true,
+                "unitTests": true,
+                "mockingPatterns": true,
+                "coverage": {
+                    "statements": 80,
+                    "branches": 80,
+                    "functions": 90
+                }
+            }
+        },
+        "nextjs": {
+            "principles": {
+                "preferFileRouting": true,
+                "useServerComponents": true,
+                "separateApiRoutes": true,
+                "optimizeForSEO": true
+            },
+            "structure": {
+                "pagesPerRoute": true,
+                "apiPerFile": true,
+                "maxPageLength": 200,
+                "modularity": true,
+                "singleResponsibility": true
+            },
+            "naming": {
+                "page": "kebab-case",
+                "api": "kebab-case"
+            },
+            "documentation": {
+                "requireComplex": true,
+                "standardFormat": true,
+                "includeExamples": true
+            },
+            "testing": {
+                "useJest": true,
+                "unitTests": true,
+                "mockingPatterns": true,
+                "coverage": {
+                    "statements": 80,
+                    "branches": 80,
+                    "functions": 90
+                }
+            }
+        }
+    }
+}
