@@ -32,4 +32,11 @@ type CourseDto struct {
 	Notes          string             `json:"notes"`
 	Styles         []string           `json:"styles"`
 	Ratings        CourseRatingsDto   `json:"ratings"`
+}
+
+// RecommendationDto는 추천 카테고리 응답을 정의합니다.
+type RecommendationDto struct {
+	Title       string      `json:"title"`
+	Description string      `json:"description"`
+	Courses     []CourseDto `json:"courses"`
 } 
