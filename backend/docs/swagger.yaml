@@ -1,0 +1,201 @@
+basePath: /api
+definitions:
+  models.CourseDto:
+    properties:
+      characteristics:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      nav:
+        items:
+          $ref: '#/definitions/models.CourseNavDto'
+        type: array
+      notes:
+        type: string
+      ratings:
+        $ref: '#/definitions/models.CourseRatingsDto'
+      region:
+        type: string
+      styles:
+        items:
+          type: string
+        type: array
+      tagline:
+        type: string
+    type: object
+  models.CourseGeolocationDto:
+    properties:
+      latitude:
+        type: number
+      longitude:
+        type: number
+    type: object
+  models.CourseNavDto:
+    properties:
+      geolocation:
+        $ref: '#/definitions/models.CourseGeolocationDto'
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  models.CourseRatingsDto:
+    properties:
+      access:
+        type: integer
+      road:
+        type: integer
+      scenery:
+        type: integer
+      speed:
+        type: integer
+      tech:
+        type: integer
+    type: object
+  models.RecommendationDto:
+    properties:
+      courses:
+        items:
+          $ref: '#/definitions/models.CourseDto'
+        type: array
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  query.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: 와인딩 로드 가이드 API 문서
+  title: Winding Road Guide API
+  version: "1.0"
+paths:
+  /courses:
+    get:
+      consumes:
+      - application/json
+      description: 지역, 스타일, 검색어로 코스를 필터링하여 조회합니다.
+      parameters:
+      - description: 지역 필터
+        in: query
+        name: region
+        type: string
+      - description: 스타일 필터
+        in: query
+        name: style
+        type: string
+      - description: 검색어
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.CourseDto'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/query.ErrorResponse'
+      summary: 코스 목록 조회
+      tags:
+      - courses
+  /courses/{id}:
+    get:
+      consumes:
+      - application/json
+      description: ID로 코스 상세 정보를 조회합니다.
+      parameters:
+      - description: 코스 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CourseDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/query.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/query.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/query.ErrorResponse'
+      summary: 코스 상세 조회
+      tags:
+      - courses
+  /recommendations:
+    get:
+      consumes:
+      - application/json
+      description: 추천 카테고리별 코스 목록을 조회합니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.RecommendationDto'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/query.ErrorResponse'
+      summary: 추천 코스 목록 조회
+      tags:
+      - recommendations
+  /recommendations/{id}:
+    get:
+      consumes:
+      - application/json
+      description: ID로 추천 코스 상세 정보를 조회합니다.
+      parameters:
+      - description: 추천 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RecommendationDto'
+        "400":
+          description: 잘못된 ID 형식
+          schema:
+            $ref: '#/definitions/query.ErrorResponse'
+        "404":
+          description: 추천 정보를 찾을 수 없음
+          schema:
+            $ref: '#/definitions/query.ErrorResponse'
+        "500":
+          description: 서버 오류
+          schema:
+            $ref: '#/definitions/query.ErrorResponse'
+      summary: 추천 코스 상세 조회
+      tags:
+      - recommendations
+swagger: "2.0"

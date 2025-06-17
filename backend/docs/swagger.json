@@ -1,0 +1,307 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "와인딩 로드 가이드 API 문서",
+        "title": "Winding Road Guide API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api",
+    "paths": {
+        "/courses": {
+            "get": {
+                "description": "지역, 스타일, 검색어로 코스를 필터링하여 조회합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "courses"
+                ],
+                "summary": "코스 목록 조회",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "지역 필터",
+                        "name": "region",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "스타일 필터",
+                        "name": "style",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "검색어",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.CourseDto"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/query.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/{id}": {
+            "get": {
+                "description": "ID로 코스 상세 정보를 조회합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "courses"
+                ],
+                "summary": "코스 상세 조회",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "코스 ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.CourseDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/query.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/query.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/query.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/recommendations": {
+            "get": {
+                "description": "추천 카테고리별 코스 목록을 조회합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recommendations"
+                ],
+                "summary": "추천 코스 목록 조회",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.RecommendationDto"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/query.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/recommendations/{id}": {
+            "get": {
+                "description": "ID로 추천 코스 상세 정보를 조회합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recommendations"
+                ],
+                "summary": "추천 코스 상세 조회",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "추천 ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.RecommendationDto"
+                        }
+                    },
+                    "400": {
+                        "description": "잘못된 ID 형식",
+                        "schema": {
+                            "$ref": "#/definitions/query.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "추천 정보를 찾을 수 없음",
+                        "schema": {
+                            "$ref": "#/definitions/query.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "서버 오류",
+                        "schema": {
+                            "$ref": "#/definitions/query.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.CourseDto": {
+            "type": "object",
+            "properties": {
+                "characteristics": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nav": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.CourseNavDto"
+                    }
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "ratings": {
+                    "$ref": "#/definitions/models.CourseRatingsDto"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "styles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tagline": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CourseGeolocationDto": {
+            "type": "object",
+            "properties": {
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.CourseNavDto": {
+            "type": "object",
+            "properties": {
+                "geolocation": {
+                    "$ref": "#/definitions/models.CourseGeolocationDto"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CourseRatingsDto": {
+            "type": "object",
+            "properties": {
+                "access": {
+                    "type": "integer"
+                },
+                "road": {
+                    "type": "integer"
+                },
+                "scenery": {
+                    "type": "integer"
+                },
+                "speed": {
+                    "type": "integer"
+                },
+                "tech": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.RecommendationDto": {
+            "type": "object",
+            "properties": {
+                "courses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.CourseDto"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "query.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
