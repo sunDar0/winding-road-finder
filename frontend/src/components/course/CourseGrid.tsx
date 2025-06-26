@@ -50,7 +50,7 @@ export function CourseGrid({ courses, loading, error, onViewDetail }: CourseGrid
         <CourseCard
           key={course.id}
           course={course}
-          onViewDetail={onViewDetail}
+          onClick={() => onViewDetail(course.id)}
         />
       ))}
     </div>
