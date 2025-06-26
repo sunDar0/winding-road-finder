@@ -55,7 +55,7 @@ export function FilterChips({ filters, onRemoveFilter, onClearAll }: FilterChips
         <span className="text-sm font-medium text-gray-700">적용된 필터:</span>
         <button
           onClick={onClearAll}
-          className="text-sm text-blue-600 hover:text-blue-800 underline"
+          className="text-sm text-blue-600 hover:text-blue-800 underline cursor-pointer"
         >
           모두 제거
         </button>
@@ -69,7 +69,7 @@ export function FilterChips({ filters, onRemoveFilter, onClearAll }: FilterChips
             <span>{label}</span>
             <button
               onClick={() => onRemoveFilter(key as keyof AdvancedFilters)}
-              className="text-blue-600 hover:text-blue-800"
+              className="text-blue-600 hover:text-blue-800 cursor-pointer"
             >
               ×
             </button>
