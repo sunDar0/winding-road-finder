@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { Recommendation } from "@/types/course";
+import { Recommendation } from "@/types/recommendation";
 import { useEffect, useState } from "react";
 
 interface UseRecommendationsReturn {
@@ -22,7 +22,9 @@ export function useRecommendations(): UseRecommendationsReturn {
       setRecommendations(data);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "알 수 없는 오류가 발생했습니다."
+        err instanceof Error
+          ? err.message
+          : "추천 데이터를 불러오는데 실패했습니다."
       );
     } finally {
       setLoading(false);

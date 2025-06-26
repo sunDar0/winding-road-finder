@@ -30,12 +30,6 @@ export interface Course {
   ratings: CourseRatings;
 }
 
-export interface Recommendation {
-  title: string;
-  description: string;
-  courses: Course[];
-}
-
 // 필터 관련 타입
 export interface CourseFilters {
   region: string;
