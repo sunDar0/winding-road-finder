@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/sunDar0/winding-road-finder/backend/docs"
 	swaggerFiles "github.com/swaggo/files"
@@ -12,13 +13,20 @@ import (
 	routes "github.com/sunDar0/winding-road-finder/backend/interfaces/routes"
 )
 
-// @title Winding Road Guide API
+// @title Winding Road Finder API
 // @version 1.0
-// @description 와인딩 로드 가이드 API 문서
+// @description 와인딩 로드 파인더 API 문서
 // @host localhost:8080
 // @BasePath /api
 func main() {
 	r := gin.Default()
+
+	// CORS 설정
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
+	r.Use(cors.New(config))
 
 	// Swagger 설정
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
