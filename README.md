@@ -1,11 +1,11 @@
-# Winding Road Guide
+# Winding Road Finder
 
 와인딩 코스 추천 서비스의 풀스택 프로젝트입니다.
 
 ## 프로젝트 구조
 
 ```
-winding-road-guide/
+winding-road-finder/
 ├── frontend/           # Next.js 기반 프론트엔드
 └── backend/           # Go 기반 백엔드
 ```
