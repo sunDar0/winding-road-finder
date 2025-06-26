@@ -2,13 +2,28 @@
 
 import { Header } from '@/components/layout/Header';
 import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/Card';
+import { RecommendationCardSkeleton, StatsCardSkeleton } from '@/components/ui/Skeleton';
 import { useCourses } from '@/hooks/useCourses';
 import { useRecommendations } from '@/hooks/useRecommendations';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
   const { courses, loading: coursesLoading, error: coursesError } = useCourses();
   const { recommendations, loading: recsLoading, error: recsError } = useRecommendations();
+
+  const handleNavigateToCourses = () => {
+    router.push('/courses');
+  };
+
+  const handleNavigateToRecommendations = () => {
+    router.push('/recommendations');
+  };
+
+  const handleNavigateToRecommendationDetail = (id: number) => {
+    router.push(`/recommendations/${id}`);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -23,42 +38,52 @@ export default function Home() {
           <p className="text-xl text-gray-600 mb-8">
             대한민국 최고의 드라이빙 코스를 발견하세요
           </p>
-          <div className="flex justify-center space-x-4">
-            <Button size="lg">
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <Button size="lg" onClick={handleNavigateToCourses}>
               코스 둘러보기
             </Button>
-            <Button variant="outline" size="lg">
-              추천 코스 보기
+            <Button variant="outline" size="lg" onClick={handleNavigateToRecommendations}>
+              추천 받기
             </Button>
           </div>
         </section>
 
-        {/* 통계 섹션 - 실제 데이터 연동 */}
+        {/* 통계 섹션 */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card>
-            <CardContent className="text-center">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
-                {coursesLoading ? '...' : courses?.length || 0}+
-              </div>
-              <div className="text-gray-600">등록된 코스</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">
-                {coursesLoading ? '...' : new Set(courses?.map(c => c.region) || []).size}
-              </div>
-              <div className="text-gray-600">지역</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="text-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2">
-                {recsLoading ? '...' : recommendations?.length || 0}
-              </div>
-              <div className="text-gray-600">추천 카테고리</div>
-            </CardContent>
-          </Card>
+          {coursesLoading ? (
+            <>
+              <StatsCardSkeleton />
+              <StatsCardSkeleton />
+              <StatsCardSkeleton />
+            </>
+          ) : (
+            <>
+              <Card>
+                <CardContent className="text-center">
+                  <div className="text-3xl font-bold text-blue-600 mb-2">
+                    {courses?.length || 0}+
+                  </div>
+                  <div className="text-gray-600">등록된 코스</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="text-center">
+                  <div className="text-3xl font-bold text-green-600 mb-2">
+                    {new Set(courses?.map(c => c.region) || []).size}
+                  </div>
+                  <div className="text-gray-600">지역</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="text-center">
+                  <div className="text-3xl font-bold text-purple-600 mb-2">
+                    {recommendations?.length || 0}
+                  </div>
+                  <div className="text-gray-600">추천 카테고리</div>
+                </CardContent>
+              </Card>
+            </>
+          )}
         </section>
 
         {/* 에러 상태 표시 */}
@@ -82,92 +107,73 @@ export default function Home() {
           </section>
         )}
 
-        {/* 로딩 상태 표시 */}
-        {(coursesLoading || recsLoading) && (
-          <section className="mb-8">
-            <Card>
-              <CardContent className="text-center">
-                <div className="text-gray-600">데이터를 불러오는 중...</div>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
-        {/* 기능 소개 섹션 */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <Card>
-            <CardHeader>
-              <h3 className="text-xl font-semibold text-gray-900">코스 검색</h3>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                지역, 스타일, 키워드로 원하는 코스를 쉽게 찾아보세요.
-              </p>
-              <Button>코스 검색하기</Button>
-            </CardContent>
-          </Card>
+        {/* 추천 코스 섹션 */}
+        <section className="mb-12">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">추천 코스</h2>
+            <Button 
+              variant="outline" 
+              onClick={handleNavigateToRecommendations}
+              className="text-sm"
+            >
+              전체 보기
+            </Button>
+          </div>
           
-          <Card>
-            <CardHeader>
-              <h3 className="text-xl font-semibold text-gray-900">추천 시스템</h3>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                당신의 취향에 맞는 최적의 코스 조합을 추천해드립니다.
-              </p>
-              <Button>추천 받기</Button>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* 실제 추천 데이터 표시 */}
-        {recommendations && recommendations.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">추천 코스</h2>
+          {recsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recommendations.slice(0, 3).map((rec, index) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <h3 className="text-lg font-semibold text-gray-900">{rec.title}</h3>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 mb-4 text-sm">{rec.description}</p>
-                    <div className="text-sm text-gray-500">
-                      포함된 코스: {rec.courses.length}개
-                    </div>
-                  </CardContent>
-                </Card>
+              {[...Array(3)].map((_, index) => (
+                <RecommendationCardSkeleton key={index} />
               ))}
             </div>
-          </section>
-        )}
+          ) : recommendations && recommendations.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recommendations.slice(0, 3).map((rec) => (
+                <div 
+                  key={rec.id} 
+                  className="cursor-pointer hover:shadow-lg transition-shadow duration-200 h-full"
+                  onClick={() => handleNavigateToRecommendationDetail(rec.id)}
+                >
+                  <Card className="h-full">
+                    <div className="p-6 h-full flex flex-col">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{rec.title}</h3>
+                      <p className="text-gray-600 mb-4 text-sm line-clamp-3 flex-grow">{rec.description}</p>
+                      <div className="text-sm text-gray-500 mt-auto">
+                        포함된 코스: {rec.courses?.length || 0}개
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Card>
+              <CardContent className="text-center py-8">
+                <div className="text-gray-500">추천 데이터를 불러올 수 없습니다.</div>
+              </CardContent>
+            </Card>
+          )}
+        </section>
 
-        {/* 안전 수칙 섹션 */}
+        {/* 빠른 액션 섹션 */}
         <section className="mb-12">
           <Card>
-            <CardHeader>
-              <h3 className="text-xl font-semibold text-gray-900">🚨 안전 수칙</h3>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-2">운전 전</h4>
-                  <ul className="space-y-1">
-                    <li>• 차량 점검 및 연료 확인</li>
-                    <li>• 내비게이션 경로 미리 확인</li>
-                    <li>• 날씨 및 도로 상황 체크</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-2">운전 중</h4>
-                  <ul className="space-y-1">
-                    <li>• 속도 제한 준수</li>
-                    <li>• 안전거리 확보</li>
-                    <li>• 피로 시 휴식 취하기</li>
-                  </ul>
-                </div>
+            <div className="p-8 text-center">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                더 자세히 알아보기
+              </h3>
+              <p className="text-gray-600 mb-6">
+                다양한 기능을 통해 원하는 코스를 찾아보세요
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <Button variant="outline" onClick={handleNavigateToCourses}>
+                  모든 코스 보기
+                </Button>
+                <Button variant="outline" onClick={handleNavigateToRecommendations}>
+                  추천 시스템 알아보기
+                </Button>
               </div>
-            </CardContent>
+            </div>
           </Card>
         </section>
       </main>
