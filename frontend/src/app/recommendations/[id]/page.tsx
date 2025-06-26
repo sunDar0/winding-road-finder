@@ -161,7 +161,7 @@ export default function RecommendationDetailPage() {
               <CourseCard
                 key={course.id}
                 course={course}
-                onViewDetail={handleViewCourse}
+                onClick={() => handleViewCourse(course.id)}
               />
             ))}
           </div>

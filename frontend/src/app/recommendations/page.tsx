@@ -10,8 +10,8 @@ export default function RecommendationsPage() {
   const router = useRouter();
   const { recommendations, loading, error } = useRecommendations();
 
-  const handleViewCourse = (id: number) => {
-    router.push(`/courses/${id}`);
+  const handleViewRecommendation = (recommendationId: number) => {
+    router.push(`/recommendations/${recommendationId}`);
   };
 
   return (
@@ -48,8 +48,7 @@ export default function RecommendationsPage() {
               <RecommendationCard
                 key={recommendation.id}
                 recommendation={recommendation}
-                recommendationId={recommendation.id}
-                onViewCourse={handleViewCourse}
+                onClick={() => handleViewRecommendation(recommendation.id)}
               />
             ))}
           </div>
