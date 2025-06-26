@@ -1,6 +1,8 @@
+import { NaverMap } from '@/components/map/NaverMap';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Course } from '@/types/course';
+import { useState } from 'react';
 
 interface CourseDetailProps {
   course: Course;
@@ -8,22 +10,34 @@ interface CourseDetailProps {
 }
 
 export function CourseDetail({ course, onBack }: CourseDetailProps) {
-  const getRatingColor = (rating: number) => {
-    if (rating >= 8) return 'text-green-600';
-    if (rating >= 6) return 'text-yellow-600';
+  const [showAllRatings, setShowAllRatings] = useState(false);
+
+  const getAverageRating = () => {
+    const ratings = Object.values(course.ratings);
+    return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1);
+  };
+
+  const getRatingColor = (rating: string) => {
+    const num = parseFloat(rating);
+    if (num >= 4.5) return 'text-green-600';
+    if (num >= 4.0) return 'text-blue-600';
+    if (num >= 3.5) return 'text-yellow-600';
     return 'text-red-600';
   };
 
-  const getAverageRating = () => {
-    const { tech, speed, scenery, road, access } = course.ratings;
-    return Math.round((tech + speed + scenery + road + access) / 5);
+  const getRatingLabel = (rating: number) => {
+    if (rating >= 4.5) return '매우 좋음';
+    if (rating >= 4.0) return '좋음';
+    if (rating >= 3.5) return '보통';
+    if (rating >= 3.0) return '나쁨';
+    return '매우 나쁨';
   };
 
   return (
     <div className="space-y-6">
       {/* 뒤로가기 버튼 */}
       <Button variant="outline" onClick={onBack}>
-        ← 목록으로 돌아가기
+        ← 뒤로가기
       </Button>
 
       {/* 코스 기본 정보 */}
@@ -59,73 +73,63 @@ export function CourseDetail({ course, onBack }: CourseDetailProps) {
         </CardContent>
       </Card>
 
-      {/* 평점 상세 */}
+      {/* 네이버 지도 */}
       <Card>
         <CardHeader>
-          <h2 className="text-xl font-semibold text-gray-900">상세 평점</h2>
+          <h2 className="text-xl font-semibold text-gray-900">코스 경로</h2>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-sm text-gray-600 mb-2">기술적 난이도</div>
-              <div className={`text-2xl font-bold ${getRatingColor(course.ratings.tech)}`}>
-                {course.ratings.tech}
-              </div>
-            </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-sm text-gray-600 mb-2">속도감</div>
-              <div className={`text-2xl font-bold ${getRatingColor(course.ratings.speed)}`}>
-                {course.ratings.speed}
-              </div>
-            </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-sm text-gray-600 mb-2">경관</div>
-              <div className={`text-2xl font-bold ${getRatingColor(course.ratings.scenery)}`}>
-                {course.ratings.scenery}
-              </div>
-            </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-sm text-gray-600 mb-2">도로 상태</div>
-              <div className={`text-2xl font-bold ${getRatingColor(course.ratings.road)}`}>
-                {course.ratings.road}
-              </div>
-            </div>
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
-              <div className="text-sm text-gray-600 mb-2">접근성</div>
-              <div className={`text-2xl font-bold ${getRatingColor(course.ratings.access)}`}>
-                {course.ratings.access}
-              </div>
-            </div>
-          </div>
+          <NaverMap 
+            navPoints={course.nav} 
+            courseName={course.name}
+          />
         </CardContent>
       </Card>
 
-      {/* 내비게이션 정보 */}
-      {course.nav && course.nav.length > 0 && (
-        <Card>
-          <CardHeader>
-            <h2 className="text-xl font-semibold text-gray-900">내비게이션 경로</h2>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {course.nav.map((nav, index) => (
-                <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
-                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
-                    {index + 1}
-                  </div>
-                  <div>
-                    <div className="font-medium text-gray-900">{nav.name}</div>
-                    <div className="text-sm text-gray-600">{nav.type}</div>
-                    <div className="text-xs text-gray-500">
-                      {nav.geolocation.latitude.toFixed(6)}, {nav.geolocation.longitude.toFixed(6)}
-                    </div>
-                  </div>
+      {/* 평점 상세 */}
+      <Card>
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-gray-900">평점 상세</h2>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAllRatings(!showAllRatings)}
+            >
+              {showAllRatings ? '간단히 보기' : '전체 보기'}
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Object.entries(course.ratings).map(([key, rating]) => (
+              <div key={key} className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium text-gray-900 capitalize">
+                    {key === 'tech' && '기술성'}
+                    {key === 'speed' && '스피드'}
+                    {key === 'scenery' && '경관'}
+                    {key === 'road' && '도로 상태'}
+                    {key === 'access' && '접근성'}
+                  </span>
+                  <span className={`font-bold ${getRatingColor(rating.toString())}`}>
+                    {rating}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-blue-600 h-2 rounded-full"
+                    style={{ width: `${(rating / 5) * 100}%` }}
+                  ></div>
+                </div>
+                {showAllRatings && (
+                  <p className="text-sm text-gray-600 mt-1">{getRatingLabel(rating)}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* 추가 정보 */}
       {course.notes && (
@@ -134,7 +138,7 @@ export function CourseDetail({ course, onBack }: CourseDetailProps) {
             <h2 className="text-xl font-semibold text-gray-900">추가 정보</h2>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-700 whitespace-pre-line">{course.notes}</p>
+            <p className="text-gray-700 whitespace-pre-wrap">{course.notes}</p>
           </CardContent>
         </Card>
       )}
