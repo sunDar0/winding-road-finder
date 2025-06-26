@@ -83,7 +83,7 @@ export default function CoursesPage() {
             <h2 className="text-lg font-semibold text-gray-900">필터</h2>
             <button
               onClick={() => setShowAdvancedFilter(!showAdvancedFilter)}
-              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium cursor-pointer"
             >
               {showAdvancedFilter ? '기본 필터' : '고급 필터'}
             </button>
@@ -151,7 +151,7 @@ export default function CoursesPage() {
               <div className="flex items-end">
                 <button
                   onClick={clearAllFilters}
-                  className="w-full px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
+                  className="w-full px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors cursor-pointer"
                 >
                   필터 초기화
                 </button>
