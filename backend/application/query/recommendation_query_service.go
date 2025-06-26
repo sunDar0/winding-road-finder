@@ -7,6 +7,7 @@ import (
 
 // RecommendationWithCourses는 추천 카테고리와 코스 상세정보 집합을 나타냅니다.
 type RecommendationWithCourses struct {
+	ID          int
 	Title       string
 	Description string
 	Courses     []*course.CourseAggregate
@@ -41,6 +42,7 @@ func (svc *RecommendationQueryService) GetRecommendationsWithCourses() ([]*Recom
 			}
 		}
 		result = append(result, &RecommendationWithCourses{
+			ID:          rec.ID,
 			Title:       rec.Title,
 			Description: rec.Description,
 			Courses:     courses,
@@ -55,18 +57,23 @@ func (svc *RecommendationQueryService) GetRecommendationById(id int) (*Recommend
 		return nil, err
 	}
 	
+	if rec == nil {
+		return nil, nil
+	}
+	
 	var courses []*course.CourseAggregate
-		for _, cid := range rec.CourseIds {
-			c, err := svc.courseRepo.FindByID(cid)
-			if err != nil {
-				return nil, err
-			}
-			if c != nil {
-				courses = append(courses, c)
-			}
+	for _, cid := range rec.CourseIds {
+		c, err := svc.courseRepo.FindByID(cid)
+		if err != nil {
+			return nil, err
 		}
+		if c != nil {
+			courses = append(courses, c)
+		}
+	}
 		
 	return &RecommendationWithCourses{
+		ID:          rec.ID,
 		Title:       rec.Title,
 		Description: rec.Description,
 		Courses:     courses,

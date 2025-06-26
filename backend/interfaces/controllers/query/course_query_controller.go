@@ -112,6 +112,7 @@ func (ctrl *CourseQueryController) GetRecommendations(c *gin.Context) {
 			courseDtos = append(courseDtos, toCourseDto(agg))
 		}
 		result = append(result, models.RecommendationDto{
+			ID:          rec.ID,
 			Title:       rec.Title,
 			Description: rec.Description,
 			Courses:     courseDtos,
@@ -147,7 +148,21 @@ func (ctrl *CourseQueryController)GetRecommendationById(c *gin.Context) {
 		c.JSON(http.StatusNotFound, ErrorResponse{Error: "recommendation not found"})
 		return
 	}
-	c.JSON(http.StatusOK, rec)
+	
+	// RecommendationWithCourses를 RecommendationDto로 변환
+	var courseDtos []models.CourseDto
+	for _, agg := range rec.Courses {
+		courseDtos = append(courseDtos, toCourseDto(agg))
+	}
+	
+	result := models.RecommendationDto{
+		ID:          rec.ID,
+		Title:       rec.Title,
+		Description: rec.Description,
+		Courses:     courseDtos,
+	}
+	
+	c.JSON(http.StatusOK, result)
 }
 
 // 도메인 모델을 DTO로 변환

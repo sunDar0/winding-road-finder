@@ -37,9 +37,11 @@ func (repo *RecommendationQueryRepositoryImpl) FindById(id int) (*recommendation
 	if err := json.NewDecoder(file).Decode(&recs); err != nil {
 		return nil, err
 	}
-	// id를 배열 인덱스로 간주 (실제 요구에 따라 조정 가능)
-	if id < 0 || id >= len(recs) {
-		return nil, nil
+	// 실제 ID로 검색
+	for _, rec := range recs {
+		if rec.ID == id {
+			return rec, nil
+		}
 	}
-	return recs[id], nil
+	return nil, nil
 } 

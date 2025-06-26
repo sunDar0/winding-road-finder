@@ -36,6 +36,7 @@ type CourseDto struct {
 
 // RecommendationDto는 추천 카테고리 응답을 정의합니다.
 type RecommendationDto struct {
+	ID          int         `json:"id"`
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
 	Courses     []CourseDto `json:"courses"`
