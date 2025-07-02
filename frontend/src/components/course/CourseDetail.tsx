@@ -1,4 +1,4 @@
-import { NaverMap } from '@/components/map/NaverMap';
+import { CourseRouteMap } from '@/components/map/CourseRouteMap';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Course } from '@/types/course';
@@ -73,15 +73,13 @@ export function CourseDetail({ course, onBack }: CourseDetailProps) {
         </CardContent>
       </Card>
 
-      {/* 네이버 지도 */}
+      {/* 코스 경로 지도 */}
       <Card>
-        <CardHeader>
-          <h2 className="text-xl font-semibold text-gray-900">코스 경로</h2>
-        </CardHeader>
         <CardContent>
-          <NaverMap 
+          <CourseRouteMap 
             navPoints={course.nav} 
             courseName={course.name}
+            naverMapUrl={course.naverMapUrl}
           />
         </CardContent>
       </Card>
@@ -91,13 +89,7 @@ export function CourseDetail({ course, onBack }: CourseDetailProps) {
         <CardHeader>
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold text-gray-900">평점 상세</h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowAllRatings(!showAllRatings)}
-            >
-              {showAllRatings ? '간단히 보기' : '전체 보기'}
-            </Button>
+            
           </div>
         </CardHeader>
         <CardContent>
@@ -122,9 +114,8 @@ export function CourseDetail({ course, onBack }: CourseDetailProps) {
                     style={{ width: `${(rating / 5) * 100}%` }}
                   ></div>
                 </div>
-                {showAllRatings && (
-                  <p className="text-sm text-gray-600 mt-1">{getRatingLabel(rating)}</p>
-                )}
+                
+                <p className="text-sm text-gray-600 mt-1">{getRatingLabel(rating)}</p>
               </div>
             ))}
           </div>
