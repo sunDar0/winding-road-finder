@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "와인딩 로드 가이드 API 문서",
-        "title": "Winding Road Guide API",
+        "description": "와인딩 로드 파인더 API 문서",
+        "title": "Winding Road Finder API",
         "contact": {},
         "version": "1.0"
     },
@@ -213,6 +213,9 @@
                         "$ref": "#/definitions/models.CourseNavDto"
                     }
                 },
+                "naverMapUrl": {
+                    "type": "string"
+                },
                 "notes": {
                     "type": "string"
                 },
@@ -289,6 +292,9 @@
                 },
                 "description": {
                     "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "title": {
                     "type": "string"

@@ -219,6 +219,9 @@ const docTemplate = `{
                         "$ref": "#/definitions/models.CourseNavDto"
                     }
                 },
+                "naverMapUrl": {
+                    "type": "string"
+                },
                 "notes": {
                     "type": "string"
                 },
@@ -296,6 +299,9 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
+                "id": {
+                    "type": "integer"
+                },
                 "title": {
                     "type": "string"
                 }
@@ -318,8 +324,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/api",
 	Schemes:          []string{},
-	Title:            "Winding Road Guide API",
-	Description:      "와인딩 로드 가이드 API 문서",
+	Title:            "Winding Road Finder API",
+	Description:      "와인딩 로드 파인더 API 문서",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
