@@ -28,6 +28,7 @@ type CourseDto struct {
 	Region         string             `json:"region"`
 	Tagline        string             `json:"tagline"`
 	Characteristics string            `json:"characteristics"`
+	NaverMapUrl     string            `json:"naverMapUrl"`
 	Nav            []CourseNavDto     `json:"nav"`
 	Notes          string             `json:"notes"`
 	Styles         []string           `json:"styles"`

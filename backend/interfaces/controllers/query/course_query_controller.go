@@ -184,6 +184,7 @@ func toCourseDto(agg *course.CourseAggregate) models.CourseDto {
 		Region:          agg.Region,
 		Tagline:         agg.Tagline,
 		Characteristics: agg.Characteristics,
+		NaverMapUrl:     agg.NaverMapUrl,
 		Nav:             navs,
 		Notes:           agg.Notes,
 		Styles:          agg.Styles,

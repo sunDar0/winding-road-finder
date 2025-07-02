@@ -29,6 +29,7 @@ type CourseAggregate struct {
 	Region          string
 	Tagline         string
 	Characteristics string
+	NaverMapUrl     string
 	Nav             []CourseNav
 	Notes           string
 	Styles          []string
