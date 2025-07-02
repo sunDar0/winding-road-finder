@@ -28,6 +28,7 @@ export interface Course {
   notes: string;
   styles: string[];
   ratings: CourseRatings;
+  naverMapUrl: string;
 }
 
 // 필터 관련 타입
