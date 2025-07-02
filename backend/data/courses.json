@@ -5,6 +5,7 @@
     "region": "경기도",
     "tagline": "수도권에서 가장 유명한 드라이빙의 성지",
     "characteristics": "37번 국도를 따라 이어지는 서울 근교 최고의 와인딩 코스. 정상을 기준으로 남쪽은 완만한 커브와 긴 직선, 북쪽은 급격한 커브가 연달아 나타나 성격이 뚜렷하게 구분됨.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -50,21 +51,22 @@
     "region": "경기도",
     "tagline": "헤어핀과 드라이버의 기술이 만나는 곳",
     "characteristics": "'로코 갤러리 길'로 더 유명하며, 와인딩이라는 단어에 가장 잘 어울리는 코스. 좁고 긴 직선 구간이 거의 없는 대신, 다양한 곡률의 커브와 헤어핀 구간이 산을 따라 이어져 상당한 고저차를 보임. 정교한 브레이크 컨트롤이 요구되는 기술적인 도로.",
+    "naverMapUrl": "https://naver.me/GVEZKRZC",
     "nav": [
       {
         "type": "출발지",
         "name": "가평군 청평면 청평역",
         "geolocation": {
-          "latitude": 37.57934895263598,
-          "longitude": 127.45799919873076
+          "latitude": 37.73603066199542,
+          "longitude": 127.42617656210103
         }
       },
       {
         "type": "도착지",
         "name": "로코갤러리",
         "geolocation": {
-          "latitude": 37.57934895263598,
-          "longitude": 127.45799919873076
+          "latitude": 37.74708757698912,
+          "longitude": 127.49802839429647
         }
       }
     ],
@@ -86,29 +88,30 @@
     "region": "경기도",
     "tagline": "역사와 함께 달리는 입문자를 위한 클래식 코스",
     "characteristics": "코스 길이가 짧고 경사가 완만하며, 급격한 커브가 적어 와인딩 입문자에게 가장 많이 추천되는 코스. 유네스코 세계문화유산인 남한산성을 끼고 돌아 역사적 정취를 느낄 수 있음.",
+    "naverMapUrl": "https://naver.me/531w7b4M",
     "nav": [
       {
         "type": "출발지",
         "name": "성남시 수정구 복정역",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.47079619251762,
+          "longitude": 127.12731759051263
         }
       },
       {
         "type": "경유지 1",
         "name": "남한산성 로터리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.477899899757304,
+          "longitude": 127.18426474284247
         }
       },
       {
         "type": "도착지",
         "name": "광주시 남한산성면 행정복지센터",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.46343680896781,
+          "longitude": 127.24485520062065
         }
       }
     ],
@@ -131,21 +134,22 @@
     "region": "경기도",
     "tagline": "완만한 경사 속 숨겨진 날카로운 코너",
     "characteristics": "명성산과 사향산 사이를 지나는 길로, 200m에 달하는 고저차를 가졌지만 코스가 길게 늘어져 있어 경사는 완만한 편. 몇몇 급한 커브와 블라인드 코너가 있어 주의가 필요.",
+    "naverMapUrl": "https://naver.me/5zXBhdR3",
     "nav": [
       {
         "type": "출발지",
-        "name": "포천시 영북면 산정호수",
+        "name": "산정호수 상동주차장 입구",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 38.067794186739086,
+          "longitude": 127.32554371362627
         }
       },
       {
         "type": "도착지",
-        "name": "경기도평화교육연수원",
+        "name": "KH그룹연수원",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 38.0478573879703,
+          "longitude": 127.37099190499445
         }
       }
     ],
@@ -167,29 +171,22 @@
     "region": "경기도",
     "tagline": "드라이브와 관광을 한번에 즐기는 호반 코스",
     "characteristics": "마장호수 둘레길은 난이도가 낮고 경치가 좋지만, 관광 차량으로 방어 운전이 필수. 말머리고개 구간은 경사가 급하고 코너가 깊어 기술적인 주행을 요구하며, 겨울철에는 결빙 위험.",
+    "naverMapUrl": "https://naver.me/Fbqe0s1q",
     "nav": [
       {
         "type": "출발지",
-        "name": "양주시 장흥면 기산저수지",
+        "name": "영장1리마을회관",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
-        }
-      },
-      {
-        "type": "경유지 1",
-        "name": "파주시 광탄면 마장호수 출렁다리",
-        "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.77550256106715,
+          "longitude": 126.90843880559656
         }
       },
       {
         "type": "도착지",
-        "name": "양주시 장흥면 가마골 유원지",
+        "name": "송추가마골 본관",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.71766123435577,
+          "longitude": 126.97255244164121
         }
       }
     ],
@@ -211,55 +208,48 @@
     "id": 6,
     "name": "서울 근교 반나절 투어 코스",
     "region": "경기도",
-    "tagline": "하루에 네 개의 고개를 정복하는 종합 선물 세트",
-    "characteristics": "유명산, 널미재, 대곡치, 백양치 등 서울 근교 유명 와인딩 코스를 엮은 약 230km의 장거리 코스. 각 고개마다 특성이 달라 다양한 운전의 재미를 느낄 수 있음.",
+    "tagline": "하루에 세 개의 고개를 정복하는 종합 선물 세트",
+    "characteristics": "유명산, 널미재, 백양치 옛길 등 서울 근교 유명 와인딩 코스를 엮은 약 100km 장거리 코스. 각 고개마다 특성이 달라 다양한 운전의 재미를 느낄 수 있음.",
+    "naverMapUrl": "https://naver.me/Fc5EOmbF",
     "nav": [
       {
         "type": "출발지",
-        "name": "서울 서초구 양재역",
+        "name": "SK엔크린 양평프라자주유소",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.51158730194126,
+          "longitude": 127.44272266729025
         }
       },
       {
         "type": "경유지 1",
-        "name": "유명산 정상",
+        "name": "유명산 삼거리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.60136547104474,
+          "longitude": 127.49298432118104
         }
       },
       {
         "type": "경유지 2",
         "name": "널미재",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.6633973733403,
+          "longitude": 127.55301459941755
         }
       },
       {
         "type": "경유지 3",
-        "name": "대곡치",
+        "name": "백양치 옛길",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
-        }
-      },
-      {
-        "type": "경유지 4",
-        "name": "백양치",
-        "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.61003169636261,
+          "longitude": 127.69618599252586
         }
       },
       {
         "type": "도착지",
-        "name": "서울 서초구 양재역",
+        "name": "SK엔크린 양평프라자주유소",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.51158730194126,
+          "longitude": 127.44272266729025
         }
       }
     ],
@@ -282,29 +272,30 @@
     "region": "서울특별시",
     "tagline": "서울의 야경을 품고 달리는 도심 속 와인딩",
     "characteristics": "서울의 대표적인 드라이브 코스로, 북악산 능선을 따라 약 10km에 걸쳐 이어짐. 야경이 특히 아름다워 야간 드라이브 명소로 유명.",
+    "naverMapUrl": "https://naver.me/GtJhrIIa",
     "nav": [
       {
         "type": "출발지",
         "name": "서울 성북구 한성대입구역",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.588765196284925,
+          "longitude": 127.00586782275876
         }
       },
       {
         "type": "경유지 1",
         "name": "북악팔각정",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.601749262527164,
+          "longitude": 126.98044285428895
         }
       },
       {
         "type": "도착지",
         "name": "서울 종로구 창의문",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.59311464526646,
+          "longitude": 126.96654325507156
         }
       }
     ],
@@ -327,29 +318,30 @@
     "region": "경기도",
     "tagline": "바다 위를 가로지르는 끝없는 직선과 바람",
     "characteristics": "와인딩 코스는 아니지만, 뻥 뚫린 바다 위 도로를 질주하는 해방감을 느낄 수 있는 명소. 시화방조제와 화성방조제가 이어져 있으며, 해 질 녘 노을이 장관.",
+    "naverMapUrl": "https://naver.me/Grex374o",
     "nav": [
       {
         "type": "출발지",
         "name": "안산시 단원구 오이도",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.33939671686204,
+          "longitude": 126.69628309624895
         }
       },
       {
         "type": "경유지 1",
         "name": "시화나래휴게소",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.311161373882385,
+          "longitude": 126.60698136167426
         }
       },
       {
         "type": "도착지",
         "name": "화성시 서신면 궁평항",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.11715591829414,
+          "longitude": 126.68233771327267
         }
       }
     ],
@@ -372,29 +364,30 @@
     "region": "경기도",
     "tagline": "자유를 향해 달리는 최북단 드라이브",
     "characteristics": "한강과 임진강을 따라 임진각까지 이어지는 고속화도로. 코너링의 즐거움보다는 막힘없는 주행과 특유의 분위기를 즐기는 코스.",
+    "naverMapUrl": "https://naver.me/x0XNjHLB",
     "nav": [
       {
         "type": "출발지",
-        "name": "고양시 덕양구 행주대교 북단",
+        "name": "행주대교IC",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.60584435308855,
+          "longitude": 126.81745010630708
         }
       },
       {
         "type": "경유지 1",
         "name": "파주출판도시",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.70906245725138,
+          "longitude": 126.6831850162694
         }
       },
       {
         "type": "도착지",
-        "name": "임진각 평화누리공원",
+        "name": "임진각관광지평화휴게소",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.891107645315536,
+          "longitude": 126.74128390625808
         }
       }
     ],
@@ -417,6 +410,7 @@
     "region": "인천광역시",
     "tagline": "역사와 갯벌, 노을이 함께하는 섬 일주",
     "characteristics": "섬 전체를 한 바퀴 도는 해안도로는 다양한 풍경을 선사. 특히 서쪽의 동막해변으로 이어지는 길과 남쪽의 해안도로가 아름다움.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -470,6 +464,7 @@
     "region": "경기도",
     "tagline": "저세상 급경사를 자랑하는 충격적인 코스",
     "characteristics": "325번 지방도의 배티로 구간으로, 급경사와 초저속 코너 위주로 구성. 특히 배티성지를 지나 평택제천고속도로 방면으로 향하는 내리막은 경사가 매우 심해 극도의 주의가 필요.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -506,6 +501,7 @@
     "region": "경기도",
     "tagline": "북한강의 풍경과 어우러진 유러피안 감성 드라이브",
     "characteristics": "청평대교에서 시작하여 북한강을 끼고 달리는 75번 국도 구간. 강변을 따라 가로수가 터널을 이루고, 호명산과 화야산의 풍경이 어우러져 아름다운 경치를 자랑.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -551,6 +547,7 @@
     "region": "경기도",
     "tagline": "물안개 피어오르는 강변의 한적한 여유",
     "characteristics": "남한강을 끼고 달리는 코스로, 특히 이른 아침 물안개가 피어오를 때 환상적인 분위기를 연출. 도로를 따라 벚나무가 심어져 있어 봄철 드라이브 코스로도 유명.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -596,6 +593,7 @@
     "region": "경기도",
     "tagline": "경기도와 강원도를 잇는 험준한 고갯길",
     "characteristics": "포천 이동면에서 강원도 화천으로 넘어가는 고갯길로, 여우고개보다 경사가 높고 코너가 훨씬 많아 더욱 거친 와인딩을 즐길 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -632,6 +630,7 @@
     "region": "경기도",
     "tagline": "44고개 와인딩으로 유명한 포천의 전망대",
     "characteristics": "길이 접힐 듯 꺾이는 '44고개' 와인딩 코스가 매력적인 곳. 정상 부근 전망대에서는 포천 시내 전경이 한눈에 들어옴.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -668,6 +667,7 @@
     "region": "강원도",
     "tagline": "하루 종일 와인딩에만 몰두할 수 있는 궁극의 코스",
     "characteristics": "춘천, 화천, 양구 일대의 유명 와인딩 코스를 모두 엮은 대장정 루트. 각 구간마다 전혀 다른 특성을 보여 지루할 틈이 없음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -714,6 +714,7 @@
     "region": "강원도",
     "tagline": "춘천 투어의 시작을 알리는 워밍업 구간",
     "characteristics": "56번 국도의 일부로, 춘천 그랜드 투어의 첫 관문. 적당한 난이도의 코너가 이어져 본격적인 고갯길 주행 전 몸을 풀기에 좋음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -758,6 +759,7 @@
     "region": "강원도",
     "tagline": "터널에 자리를 내주고 드라이버의 품으로 돌아온 길",
     "characteristics": "배후령 터널 개통으로 교통량이 거의 없어진 구 46번 국도. 노면 상태가 양호하고 중고속 코너가 이어져 리드미컬한 주행이 가능.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -794,6 +796,7 @@
     "region": "강원도",
     "tagline": "드라이버의 담력을 시험하는 극강의 테크니컬 코스",
     "characteristics": "극심한 고저차와 함께 '말도 안 되게 무시무시한 급경사 헤어핀'이 숨어있는, 난이도 최상의 구간. 특히 더블 헤어핀 구간은 스릴 만점.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -838,6 +841,7 @@
     "region": "강원도",
     "tagline": "소양호를 옆에 끼고 달리는 30km의 힐링 와인딩",
     "characteristics": "소양호를 따라 약 30km에 걸쳐 구불구불한 길이 이어짐. 급격한 헤어핀이나 고저차가 적어 비교적 부담 없이 장거리 와인딩을 즐길 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -883,6 +887,7 @@
     "region": "강원도",
     "tagline": "아흔아홉 굽잇길을 넘어 평화를 향해 달리는 길",
     "characteristics": "약 20~22km의 압도적인 길이를 자랑하는 와인딩 로드. '아흔아홉굽잇길'이라는 이명처럼 코너가 연속적으로 나타나며, 장거리 오르막과 짧은 헤어핀이 조합.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -920,6 +925,7 @@
     "region": "강원도",
     "tagline": "드라이버의 모든 기술을 요구하는 와일드한 헤어핀의 향연",
     "characteristics": "해발 1,089m, 국도가 지나는 가장 높은 고개. 말도 안 되게 타이트하고 아름다운 헤어핀 코스가 연속되어 정확하고 빠른 스티어링과 브레이킹 기술이 필수.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -964,6 +970,7 @@
     "region": "강원도",
     "tagline": "용이 기어오르는 듯한 장대하고 빠른 고갯길",
     "characteristics": "전체 길이 17km에 달하는 거대한 스케일. 특히 홍천 업힐 구간에는 회피 차선이 있어 저속 차량을 안전하게 추월 가능. 중고속 파워 드라이빙에 최적.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1009,6 +1016,7 @@
     "region": "강원도",
     "tagline": "설악의 절경을 품은, 경관과 스릴의 공존",
     "characteristics": "설악산의 수려한 경관을 즐길 수 있는 관광 드라이브 코스. 아름다운 풍경 속에 운두령에 버금가는 급경사 헤어핀이 숨어 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1054,6 +1062,7 @@
     "region": "강원도",
     "tagline": "역사의 무게를 느끼며 달리는 구불구불한 길",
     "characteristics": "영동고속도로 터널 개통으로 한적해진 옛길. '한국의 아름다운 길 100선'에 선정. 험준한 코너가 연속되는 전통적인 와인딩 코스.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1091,6 +1100,7 @@
     "region": "강원도",
     "tagline": "풍력발전기 아래서 즐기는 고산지대 와인딩",
     "characteristics": "정상 부근 풍력발전단지가 이국적인 풍경을 자아냄. 6번 국도 옛길인 양구두미재 구간이 와인딩 코스로 유명하며, 고저차가 있는 헤어핀이 반복.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1128,6 +1138,7 @@
     "region": "강원도",
     "tagline": "설악의 북쪽을 넘는, 길고 험준한 도전의 길",
     "characteristics": "매우 길고 높은 대표적인 옛길 와인딩 코스. 험준한 고갯길과 뛰어난 설악산 조망을 동시에 즐길 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1165,6 +1176,7 @@
     "region": "강원도",
     "tagline": "오대산을 관통하는 부드러운 능선의 길",
     "characteristics": "오대산을 넘는 고갯길. 다른 강원도의 험준한 고개들에 비해 비교적 코너가 완만하여 부드러운 리듬의 드라이브를 즐길 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1202,6 +1214,7 @@
     "region": "강원도",
     "tagline": "내린천 계곡을 따라 흐르는 유유자적 와인딩",
     "characteristics": "내린천을 따라 이어지는 긴 구간. 위아래 굴곡은 거의 없고 좌우 굴곡만 있어, 계곡의 풍경을 즐기며 유유자적 드라이브하기에 좋음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1239,6 +1252,7 @@
     "region": "충청북도",
     "tagline": "충북과 충남을 넘나드는 6개의 고개와 호수 정복 코스",
     "characteristics": "천안, 진천, 안성을 아우르는 코스로, 각기 다른 성격의 와인딩 로드를 연속해서 경험 가능. 극악의 헤어핀부터 호반의 중고속 코너까지 다채로운 주행이 가능.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1285,6 +1299,7 @@
     "region": "충청남도",
     "tagline": "예측을 불허하는 하드코어 와인딩",
     "characteristics": "지그재그 코너가 연속되다 갑자기 차선이 사라지거나 일방통행 수준으로 좁아지는 등, 돌발 상황이 많아 극도의 순발력과 주의력을 요구. 국내 최고 수준의 난이도.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1321,6 +1336,7 @@
     "region": "충청북도",
     "tagline": "바이커들의 성지, 완만한 중고속 코너",
     "characteristics": "특히 모터사이클 라이더들에게 인기가 높은 코스. 비교적 완만한 코너가 이어져 부드러운 주행이 가능.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1357,6 +1373,7 @@
     "region": "충청북도",
     "tagline": "급경사 내리막이 선사하는 기술적인 압박감",
     "characteristics": "고저차가 큰 경사와 급경사 테크니컬 코너가 연속. 특히 정상을 넘어 안성 방면으로 내려가는 다운힐은 브레이크 타이밍과 하중 이동 컨트롤 능력을 시험.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1393,6 +1410,7 @@
     "region": "충청남도",
     "tagline": "호수 둘레길을 따라 즐기는 세미 와인딩",
     "characteristics": "이티재를 지난 후 만나게 되는 호반 도로. 고저차가 작은 중고속 지그재그 코스가 이어져 부담 없이 쾌적한 드라이브를 즐길 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1439,6 +1457,7 @@
     "region": "충청북도",
     "tagline": "헤어핀 없이 타이트한 코너로 승부하는 길",
     "characteristics": "충청 투어의 마지막을 장식하는 코스로, 헤어핀은 없지만 타이트한 코너가 연속되어 정교한 핸들링의 재미를 느낄 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1475,6 +1494,7 @@
     "region": "충청북도",
     "tagline": "65km에 달하는, 끝없이 이어지는 호반의 미로",
     "characteristics": "매우 길고(약 65km) 폭이 좁은 와인딩 로드. 업힐과 다운힐이 섞여 있으며, 코너의 깊이가 깊어 상당한 집중력을 요구.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1512,6 +1532,7 @@
     "region": "충청남도",
     "tagline": "다운힐의 쾌감을 즐길 수 있는 중급자 코스",
     "characteristics": "비교적 덜 알려진 중급 난이도의 코스. 다운힐 구간이 적절하게 분포되어 있어 리드미컬한 주행의 쾌감을 느낄 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1556,6 +1577,7 @@
     "region": "충청북도",
     "tagline": "열두 굽이 스위치백이 만들어내는 도로의 예술",
     "characteristics": "열두 굽이의 급격한 헤어핀이 장관을 이루는 곳. 특히 가을 단풍 시즌에 화려한 경치를 자랑하며, 드라이버뿐만 아니라 사진작가들에게도 인기.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1593,6 +1615,7 @@
     "region": "충청북도",
     "tagline": "한 폭의 산수화 속을 달리는 사계절 드라이브",
     "characteristics": "사계절 내내 아름다운 풍경을 자랑. 봄에는 벚꽃, 가을에는 단풍이 터널을 이루며, 월악산이 둘러싼 고요한 충주호의 모습은 감탄을 자아냄.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1630,6 +1653,7 @@
     "region": "전라북도",
     "tagline": "'하늘에 닿는 길'이라 불리는 급경사와 코너의 연속",
     "characteristics": "매우 급경사이며 응달 구간이 많아 겨울철에는 상시 통제. 정령치 휴게소를 기점으로 양방향 모두 만만치 않은 코너가 연속되어 드라이버와 차량 모두에게 상당한 부하를 줌.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1675,6 +1699,7 @@
     "region": "전라남도",
     "tagline": "'한국의 아름다운 길 100선'에 빛나는 노고단 가는 길",
     "characteristics": "정령치보다는 덜하지만 여전히 도전적인 와인딩과 빼어난 자연 경관을 자랑. 완만한 코너와 헤어핀이 적절히 조합되어 스릴 있는 다운힐을 즐길 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1720,6 +1745,7 @@
     "region": "전라남도",
     "tagline": "구렁이가 똬리를 튼 듯한, 한국에서 가장 사진적인 도로",
     "characteristics": "함양에서 지리산으로 들어가는 관문. 특히 지안재의 뱀처럼 구불거리는 헤어핀 구간은 수많은 사진작가와 라이더들의 성지. 오도재는 경사가 더욱 가파른 도전적인 업힐 코스.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1765,6 +1791,7 @@
     "region": "전라북도",
     "tagline": "지리산의 긴장을 풀고 달리는 고속 와인딩",
     "characteristics": "운봉읍 교차로부터 약 7.5km 구간으로, 코너가 반복되지만 대부분 고속 코너라 지리산의 타이트한 코스에서 느낄 수 없었던 시원한 주행이 가능.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1801,6 +1828,7 @@
     "region": "광주광역시",
     "tagline": "광주 시민들의 휴식처이자 드라이빙 코스",
     "characteristics": "무등산 국립공원을 순환하는 도로. 도심에서 가까워 접근성이 좋으며, 비교적 짧지만 꾸준한 코너링을 즐길 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1838,6 +1866,7 @@
     "region": "전라남도",
     "tagline": "여순광 지역의 대표, 호수와 산을 아우르는 복합 코스",
     "characteristics": "상당히 긴 구간에 고속, 중속, 저속 코너가 복합적으로 나타나며, 오르내리막이 반복되어 차량의 거동을 정확히 제어하는 능력이 중요.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1883,6 +1912,7 @@
     "region": "전라남도",
     "tagline": "서해 최고의 노을을 감상하는 해안 절경 드라이브",
     "characteristics": "'한국의 아름다운 길 100선'에 선정된 서해안 대표 드라이브 코스. 기암괴석, 광활한 갯벌, 불타는 석양이 어우러져 황홀한 풍경을 연출.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1928,6 +1958,7 @@
     "region": "전라남도",
     "tagline": "서킷처럼 뱅글뱅글, 짧지만 강렬한 도심 속 와인딩",
     "characteristics": "부주산을 끼고 도는 짧은 순환 코스. 계속해서 돌다 보면 마치 서킷을 주행하는 듯한 느낌을 주며, 다양한 코너가 섞여 있어 운전의 재미가 쏠쏠함.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -1964,6 +1995,7 @@
     "region": "경상남도",
     "tagline": "경남 와인딩 동호회 정모 1순위, 남부의 성지",
     "characteristics": "금요일 밤이면 경남 지역의 슈퍼카와 튜닝카들이 집결하는 곳. 높은 고저차와 파상적으로 연결되는 숏 코너가 특징인 중고속 코스.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2001,6 +2033,7 @@
     "region": "경상남도",
     "tagline": "고속 코너와 극악 헤어핀을 모두 경험하는 종합 코스",
     "characteristics": "밀양역에서 출발하여 삼랑진, 천태사, 배태고개를 거쳐 밀양댐에 이르는, 드라이브와 와인딩이 결합된 스릴 넘치는 투어 코스. 각 구간마다 성격이 뚜렷.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2063,6 +2096,7 @@
     "region": "경상남도",
     "tagline": "27km에 달하는 길고 다채로운 업힐과 다운힐",
     "characteristics": "총 길이 27km의 상당히 긴 코스. 업힐과 다운힐이 적절히 섞여 있으며, 중간에 마을을 통과하므로 과속방지턱과 저속 차량에 주의.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2100,6 +2134,7 @@
     "region": "경상남도",
     "tagline": "스키장 슬로프를 향해 달리는 하늘길",
     "characteristics": "에덴밸리 리조트로 올라가는 길이 와인딩 코스. 하늘을 향해 달리는 듯한 기분을 느낄 수 있으며, 펀 드라이빙을 즐기는 이들에게 인기.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2137,6 +2172,7 @@
     "region": "부산광역시",
     "tagline": "부산의 몽마르뜨, 15개의 커브를 품은 해안도로",
     "characteristics": "해운대에서 송정으로 이어지는 약 8km의 도심 속 드라이브 코스. 15번 이상 굽어진다고 하여 '15곡도'라는 별칭이 있으며, 달빛과 어우러진 밤바다의 정취가 특히 아름다움.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2182,6 +2218,7 @@
     "region": "경상남도",
     "tagline": "한려수도의 섬들을 파노라마로 감상하는 꿈의 60리 길",
     "characteristics": "통영 제일의 드라이브 코스. 쪽빛 바다 위로 점점이 떠 있는 섬들의 풍경이 환상적.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2227,6 +2264,7 @@
     "region": "경상남도",
     "tagline": "다리의 박물관을 건너는 예술적인 드라이브",
     "characteristics": "'한국의 아름다운 길 100선' 대상에 빛나는 길. 3개의 각기 다른 형식의 다리가 섬과 섬을 잇는 장관을 연출.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2264,6 +2302,7 @@
     "region": "경상남도",
     "tagline": "에메랄드빛 바다와 아홉 굽이 고갯길의 조화",
     "characteristics": "물결치는 고개와 구불구불한 도로를 따라 한려해상의 수려한 경관을 품고 달리는 길.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2301,6 +2340,7 @@
     "region": "제주도",
     "tagline": "대한민국에서 가장 높은 곳을 달리는, 제주 와인딩의 상징",
     "characteristics": "제주시와 서귀포를 잇는 도로 중 가장 높고 구불구불한 길. 연속 급코너와 직선 구간이 반복되다 나타나는 독특한 '롤러코스터' 구간은 1100도로만의 짜릿한 매력.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2346,6 +2386,7 @@
     "region": "제주도",
     "tagline": "한라산 동쪽 허리를 가로지르는 가장 빠른 길이자 도전의 길",
     "characteristics": "제주시와 서귀포를 가장 빠르게 잇는 산악도로로, 그만큼 길이 험하고 고갯길이 심함. 울창한 나무들이 하늘을 뒤덮어 터널을 이루는 '숲터널' 구간이 백미.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2399,6 +2440,7 @@
     "region": "제주도",
     "tagline": "삼나무 숲 사이로 뻗은, 치유와 드라이브의 길",
     "characteristics": "양옆으로 곧게 뻗은 삼나무들이 장관을 이룸. 창문을 열고 천천히 달리면 상쾌한 피톤치드를 온몸으로 느낄 수 있음.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2436,6 +2478,7 @@
     "region": "제주도",
     "tagline": "제주 서쪽 바다의 정수를 담은 해안길",
     "characteristics": "하귀에서 애월까지 이어지는 구불구불한 해안도로로, 제주에서 가장 인기 있는 드라이브 코스 중 하나. 에메랄드빛 바다와 검은 현무암이 어우러진 풍경이 일품.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
@@ -2473,6 +2516,7 @@
     "region": "제주도",
     "tagline": "하얀 풍차와 에메랄드빛 바다, 그리고 환상의 일몰",
     "characteristics": "제주 서쪽 끝, 해상풍력단지가 조성되어 있어 하얀 풍차들이 줄지어 서 있는 이국적인 풍경. 제주 최고의 일몰 명소 중 하나.",
+    "naverMapUrl": "https://naver.me/5XpL1bbm",
     "nav": [
       {
         "type": "출발지",
