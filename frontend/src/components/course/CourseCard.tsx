@@ -39,15 +39,6 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
     const centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
     const centerLng = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
     
-    // 마커 문자열 생성
-    let markers = course.nav.reduce((acc, curr, index) => {
-      const color = index === 0 ? 'red' : index === course.nav.length - 1 ? 'green' : 'blue';
-      
-      const marker = acc+`${index === 0 ? '' : '&'}markers=type:d|size:mid|color:${color}|pos:${curr.geolocation.longitude}%20${curr.geolocation.latitude}`;
-      // console.log(marker)
-      return marker;
-    },'');
-    
 
     // 줌 레벨 계산 (경로점들의 분산에 따라)
     const latDiff = Math.max(...latitudes) - Math.min(...latitudes);
@@ -59,11 +50,9 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
     if (maxDiff > 0.2) zoom = 9;
     if (maxDiff > 0.5) zoom = 8;
     if (maxDiff < 0.01) zoom = 14;
-    // ?w=300&h=300&center=127.1054221,37.3591614&level=16&X-NCP-APIGW-API-KEY-ID={API Gateway API Key ID}
-    console.log('markers ==========================',markers)
     
     
-    return `https://maps.apigw.ntruss.com/map-static/v2/raster-cors?w=500&h=500&center=${centerLng},${centerLat}&level=${zoom}&${markers}&scale=2&X-NCP-APIGW-API-KEY-ID=${clientId}`;
+    return `https://maps.apigw.ntruss.com/map-static/v2/raster-cors?w=500&h=500&center=${centerLng},${centerLat}&level=${zoom}&scale=2&X-NCP-APIGW-API-KEY-ID=${clientId}`;
   };
 
   const staticMapUrl = generateStaticMapUrl();
