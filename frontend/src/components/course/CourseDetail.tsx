@@ -2,7 +2,6 @@ import { CourseRouteMap } from '@/components/map/CourseRouteMap';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Course } from '@/types/course';
-import { useState } from 'react';
 
 interface CourseDetailProps {
   course: Course;
@@ -10,8 +9,6 @@ interface CourseDetailProps {
 }
 
 export function CourseDetail({ course, onBack }: CourseDetailProps) {
-  const [showAllRatings, setShowAllRatings] = useState(false);
-
   const getAverageRating = () => {
     const ratings = Object.values(course.ratings);
     return (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1);

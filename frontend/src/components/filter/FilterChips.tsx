@@ -79,12 +79,3 @@ export function FilterChips({ filters, onRemoveFilter, onClearAll }: FilterChips
     </div>
   );
 }
-
-function getFilterLabel(key: string): string {
-  switch (key) {
-    case 'region': return '지역';
-    case 'style': return '스타일';
-    case 'search': return '검색어';
-    default: return key;
-  }
-} 

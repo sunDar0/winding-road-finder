@@ -30,7 +30,7 @@ export function CourseRouteMap({ navPoints, courseName, className = '', naverMap
     const centerLng = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
     
     // 마커 문자열 생성
-    let markers = navPoints.reduce((acc, curr, index) => {
+    const markers = navPoints.reduce((acc, curr, index) => {
       const color = index === 0 ? 'red' : index === navPoints.length - 1 ? 'green' : 'blue';
       
       const marker = acc + `${index === 0 ? '' : '&'}markers=type:d|size:mid|color:${color}|pos:${curr.geolocation.longitude}%20${curr.geolocation.latitude}`;
