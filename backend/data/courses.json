@@ -410,38 +410,38 @@
     "region": "인천광역시",
     "tagline": "역사와 갯벌, 노을이 함께하는 섬 일주",
     "characteristics": "섬 전체를 한 바퀴 도는 해안도로는 다양한 풍경을 선사. 특히 서쪽의 동막해변으로 이어지는 길과 남쪽의 해안도로가 아름다움.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/xkt4ASSO",
     "nav": [
       {
         "type": "출발지",
         "name": "강화대교",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.73375615579011,
+          "longitude": 126.52335136325011
         }
       },
       {
         "type": "경유지 1",
         "name": "광성보",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.663563667342956,
+          "longitude": 126.52606162147131
         }
       },
       {
         "type": "경유지 2",
         "name": "동막해변",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.59312370542456,
+          "longitude": 126.45770495415852
         }
       },
       {
         "type": "도착지",
         "name": "석모대교",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.695455989939866,
+          "longitude": 126.3490243370579
         }
       }
     ],
@@ -464,22 +464,30 @@
     "region": "경기도",
     "tagline": "저세상 급경사를 자랑하는 충격적인 코스",
     "characteristics": "325번 지방도의 배티로 구간으로, 급경사와 초저속 코너 위주로 구성. 특히 배티성지를 지나 평택제천고속도로 방면으로 향하는 내리막은 경사가 매우 심해 극도의 주의가 필요.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/FUQWBzNF",
     "nav": [
       {
         "type": "출발지",
+        "name": "서운산 자연 휴양림 주차장",
+        "geolocation": {
+          "latitude": 36.94252627898453,
+          "longitude": 127.3139890363753
+        }
+      },
+      {
+        "type": "경유지 1",
         "name": "안성시 금광면 배티성지",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 36.92594944857747,
+          "longitude": 127.32862951594166
         }
       },
       {
         "type": "도착지",
-        "name": "진천군 백곡면 구수리삼거리",
+        "name": "진천군 백곡면 구수삼거리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 36.88600515709179,
+          "longitude": 127.36600668557537
         }
       }
     ],
@@ -501,30 +509,30 @@
     "region": "경기도",
     "tagline": "북한강의 풍경과 어우러진 유러피안 감성 드라이브",
     "characteristics": "청평대교에서 시작하여 북한강을 끼고 달리는 75번 국도 구간. 강변을 따라 가로수가 터널을 이루고, 호명산과 화야산의 풍경이 어우러져 아름다운 경치를 자랑.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/F9hPUyEa",
     "nav": [
       {
         "type": "출발지",
         "name": "가평군 청평면 청평대교",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.72752915857919,
+          "longitude": 127.41056470210131
         }
       },
       {
         "type": "경유지 1",
         "name": "쁘띠프랑스",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.715080609102934,
+          "longitude": 127.4911169352637
         }
       },
       {
         "type": "도착지",
         "name": "가평군 가평읍 가평오거리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.82065390589309,
+          "longitude": 127.51349161092693
         }
       }
     ],
@@ -547,30 +555,38 @@
     "region": "경기도",
     "tagline": "물안개 피어오르는 강변의 한적한 여유",
     "characteristics": "남한강을 끼고 달리는 코스로, 특히 이른 아침 물안개가 피어오를 때 환상적인 분위기를 연출. 도로를 따라 벚나무가 심어져 있어 봄철 드라이브 코스로도 유명.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/xI1vA6QA",
     "nav": [
       {
         "type": "출발지",
         "name": "광주시 퇴촌면 행정복지센터",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.467014775239036,
+          "longitude": 127.30626431247593
         }
       },
       {
         "type": "경유지 1",
         "name": "팔당물안개공원",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.508957442553225,
+          "longitude": 127.31785896536671
+        }
+      },
+      {
+        "type": "경유지 2",
+        "name": "양근대교",
+        "geolocation": {
+          "latitude": 37.4933270262046,
+          "longitude": 127.48168916761536
         }
       },
       {
         "type": "도착지",
         "name": "양평군 양서면 두물머리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.54195971484519,
+          "longitude": 127.31917863536282
         }
       }
     ],
@@ -593,22 +609,22 @@
     "region": "경기도",
     "tagline": "경기도와 강원도를 잇는 험준한 고갯길",
     "characteristics": "포천 이동면에서 강원도 화천으로 넘어가는 고갯길로, 여우고개보다 경사가 높고 코너가 훨씬 많아 더욱 거친 와인딩을 즐길 수 있음.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/G4GjvSw2",
     "nav": [
       {
         "type": "출발지",
         "name": "포천시 이동면 백운계곡",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 38.07324373258028,
+          "longitude": 127.40942119771329
         }
       },
       {
         "type": "도착지",
         "name": "화천군 사내면 광덕리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 38.06676509948592,
+          "longitude": 127.49515381109917
         }
       }
     ],
