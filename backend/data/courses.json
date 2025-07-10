@@ -646,22 +646,22 @@
     "region": "경기도",
     "tagline": "44고개 와인딩으로 유명한 포천의 전망대",
     "characteristics": "길이 접힐 듯 꺾이는 '44고개' 와인딩 코스가 매력적인 곳. 정상 부근 전망대에서는 포천 시내 전경이 한눈에 들어옴.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/FOZbhoER",
     "nav": [
       {
         "type": "출발지",
-        "name": "포천시 군내면 직두리삼거리",
+        "name": "포천시 군내면 직두삼거리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.87800844063771,
+          "longitude": 127.22794382282419
         }
       },
       {
         "type": "도착지",
         "name": "수원산정상전망대",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.85770524665427,
+          "longitude": 127.26570992570049
         }
       }
     ],
@@ -694,8 +694,40 @@
         }
       },
       {
-        "type": "경유지",
-        "name": "가락재-느랏재-배후령-배치고개-추곡약수터",
+        "type": "경유지-1",
+        "name": "가락재",
+        "geolocation": {
+          "latitude": 37.4101904296875,
+          "longitude": 127.060546875
+        }
+      },
+      {
+        "type": "경유지-2",
+        "name": "느랏재",
+        "geolocation": {
+          "latitude": 37.4101904296875,
+          "longitude": 127.060546875
+        }
+      },
+      {
+        "type": "경유지-3",
+        "name": "배후령",
+        "geolocation": {
+          "latitude": 37.4101904296875,
+          "longitude": 127.060546875
+        }
+      },
+      {
+        "type": "경유지-4",
+        "name": "배치고개",
+        "geolocation": {
+          "latitude": 37.4101904296875,
+          "longitude": 127.060546875
+        }
+      },
+      {
+        "type": "경유지-5",
+        "name": "추곡약수터",
         "geolocation": {
           "latitude": 37.4101904296875,
           "longitude": 127.060546875
