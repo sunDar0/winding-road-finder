@@ -1,6 +1,7 @@
 package query
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -185,6 +186,8 @@ func toCourseDto(agg *course.CourseAggregate) models.CourseDto {
 		Tagline:         agg.Tagline,
 		Characteristics: agg.Characteristics,
 		NaverMapUrl:     agg.NaverMapUrl,
+		ThumbnailImage:  fmt.Sprintf("/images/courses/thumbnails/course-%d.png", agg.ID),
+		DetailImage:     fmt.Sprintf("/images/courses/detail/course-%d.png", agg.ID),
 		Nav:             navs,
 		Notes:           agg.Notes,
 		Styles:          agg.Styles,

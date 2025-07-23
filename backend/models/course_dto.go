@@ -29,6 +29,8 @@ type CourseDto struct {
 	Tagline        string             `json:"tagline"`
 	Characteristics string            `json:"characteristics"`
 	NaverMapUrl     string            `json:"naverMapUrl"`
+	ThumbnailImage  string            `json:"thumbnailImage"`  // 썸네일 이미지 URL
+	DetailImage     string            `json:"detailImage"`     // 상세 이미지 URL
 	Nav            []CourseNavDto     `json:"nav"`
 	Notes          string             `json:"notes"`
 	Styles         []string           `json:"styles"`
