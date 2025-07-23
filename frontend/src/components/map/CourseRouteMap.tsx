@@ -7,57 +7,19 @@ interface CourseRouteMapProps {
   courseName: string;
   className?: string;
   naverMapUrl: string;
+  detailImageUrl?: string; // 백엔드에서 제공하는 상세 이미지 URL
 }
 
-export function CourseRouteMap({ navPoints, courseName, className = '', naverMapUrl }: CourseRouteMapProps) {
-  // Static Map URL 생성
-  const generateStaticMapUrl = () => {
-    if (!navPoints || navPoints.length === 0) {
-      return null;
-    }
-
-    const clientId = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
-    
-    if (!clientId) {
-      return null;
-    }
-
-    // 경로점들의 중심점 계산
-    const latitudes = navPoints.map(point => point.geolocation.latitude);
-    const longitudes = navPoints.map(point => point.geolocation.longitude);
-    
-    const centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
-    const centerLng = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
-    
-    // 마커 문자열 생성
-    const markers = navPoints.reduce((acc, curr, index) => {
-      const color = index === 0 ? 'red' : index === navPoints.length - 1 ? 'green' : 'blue';
-      
-      const marker = acc + `${index === 0 ? '' : '&'}markers=type:d|size:mid|color:${color}|pos:${curr.geolocation.longitude}%20${curr.geolocation.latitude}`;
-      return marker;
-    }, '');
-
-    // 줌 레벨 계산 (경로점들의 분산에 따라)
-    const latDiff = Math.max(...latitudes) - Math.min(...latitudes);
-    const lngDiff = Math.max(...longitudes) - Math.min(...longitudes);
-    const maxDiff = Math.max(latDiff, lngDiff);
-    
-    let zoom = 9;
-    if (maxDiff < 0.005) zoom = 16;
-    else if (maxDiff < 0.01) zoom = 15;
-    else if (maxDiff < 0.02) zoom = 14;
-    else if (maxDiff < 0.05) zoom = 13;
-    else if (maxDiff < 0.1) zoom = 12;
-    else if (maxDiff < 0.2) zoom = 11;
-    else if (maxDiff < 0.5) zoom = 10;
-    
-    return `https://maps.apigw.ntruss.com/map-static/v2/raster-cors?w=800&h=600&center=${centerLng},${centerLat}&level=${zoom}&${markers}&scale=2&X-NCP-APIGW-API-KEY-ID=${clientId}`;
-  };
-
-  const staticMapUrl = generateStaticMapUrl();
+export function CourseRouteMap({ 
+  navPoints, 
+  courseName, 
+  className = '', 
+  naverMapUrl,
+  detailImageUrl 
+}: CourseRouteMapProps) {
   const routeInfo = calculateRouteInfo();
 
-  // 경로 정보 계산 함수는 그대로 유지
+  // 경로 정보 계산 함수
   function calculateRouteInfo() {
     if (!navPoints || navPoints.length < 2) {
       return null;
@@ -77,7 +39,6 @@ export function CourseRouteMap({ navPoints, courseName, className = '', naverMap
       totalDistance += distance;
     }
     
-    
     return {
       distance: Math.round(totalDistance * 10) / 10,
     };
@@ -89,14 +50,20 @@ export function CourseRouteMap({ navPoints, courseName, className = '', naverMap
         <h3 className="text-lg font-semibold text-gray-900 mb-2">코스 경로</h3>
         <p className="text-sm text-gray-600">코스의 주요 지점들을 확인하세요</p>
       </div>
+      
       {/* Static Map */}
-      {staticMapUrl ? (
+      {detailImageUrl ? (
         <div className="relative">
           <img 
-            src={staticMapUrl}
+            src={`http://localhost:8080${detailImageUrl}`}
             alt={`${courseName} 코스 경로`}
             className="w-full h-[600px] max-w-3xl mx-auto object-cover rounded-lg border border-gray-200 shadow-md"
             loading="lazy"
+            onError={(e) => {
+              console.error('이미지 로드 실패:', detailImageUrl);
+              // 이미지 로드 실패 시 기본 이미지 또는 플레이스홀더 표시
+              e.currentTarget.style.display = 'none';
+            }}
           />
           {/* 경로 정보 오버레이 */}
           {routeInfo && (
@@ -122,6 +89,7 @@ export function CourseRouteMap({ navPoints, courseName, className = '', naverMap
           </div>
         </div>
       )}
+      
       {/* 네이버 지도 링크 */}
       {naverMapUrl && (
         <div className="flex justify-center">
@@ -138,6 +106,7 @@ export function CourseRouteMap({ navPoints, courseName, className = '', naverMap
           </a>
         </div>
       )}
+      
       {/* 경로점 목록 */}
       {navPoints && navPoints.length > 0 && (
         <div className="mt-6">

@@ -683,62 +683,62 @@
     "region": "강원도",
     "tagline": "하루 종일 와인딩에만 몰두할 수 있는 궁극의 코스",
     "characteristics": "춘천, 화천, 양구 일대의 유명 와인딩 코스를 모두 엮은 대장정 루트. 각 구간마다 전혀 다른 특성을 보여 지루할 틈이 없음.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/GlGtEhJO",
     "nav": [
       {
         "type": "출발지",
-        "name": "서울",
+        "name": "하남만남의광장 휴게소 편의점",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.53071216783362,
+          "longitude": 127.20612797383832
         }
       },
       {
         "type": "경유지-1",
-        "name": "가락재",
+        "name": "가락재정상쉼터",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.84636541469155,
+          "longitude": 127.86965214070871
         }
       },
       {
         "type": "경유지-2",
-        "name": "느랏재",
+        "name": "느랏재전망대쉼터",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.89484381259403,
+          "longitude": 127.82076227103677
         }
       },
       {
         "type": "경유지-3",
-        "name": "배후령",
+        "name": "배후령길(강원 춘천시 신북읍 유포리 산18-4)",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.94631254345389,
+          "longitude": 127.78422070462304
         }
       },
       {
         "type": "경유지-4",
-        "name": "배치고개",
+        "name": "배치고개(강원 춘천시 북산면 청평리 산182-4)",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.97029530425616,
+          "longitude": 127.8165999389289
         }
       },
       {
         "type": "경유지-5",
         "name": "추곡약수터",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 38.037076188984905,
+          "longitude": 127.88968069658563
         }
       },
       {
-        "type": "도착지",
-        "name": "서울",
+        "type": "출발지",
+        "name": "하남만남의광장 휴게소 편의점",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.53071216783362,
+          "longitude": 127.20612797383832
         }
       }
     ],
@@ -762,30 +762,30 @@
     "region": "강원도",
     "tagline": "춘천 투어의 시작을 알리는 워밍업 구간",
     "characteristics": "56번 국도의 일부로, 춘천 그랜드 투어의 첫 관문. 적당한 난이도의 코너가 이어져 본격적인 고갯길 주행 전 몸을 풀기에 좋음.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/GIG79Eho",
     "nav": [
       {
         "type": "출발지",
-        "name": "홍천군 화촌면 가락재터널",
+        "name": "GS25 홍천신내점",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.74768771755347,
+          "longitude": 127.94800726909081
         }
       },
       {
         "type": "경유지 1",
-        "name": "가락재로",
+        "name": "가락재터널",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.843112716606925,
+          "longitude": 127.87304775050633
         }
       },
       {
         "type": "도착지",
-        "name": "춘천시 동면 느랏재터널",
+        "name": "손흥민체육공원주차장",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.901210132530935,
+          "longitude": 127.77812515348003
         }
       }
     ],
@@ -807,22 +807,22 @@
     "region": "강원도",
     "tagline": "터널에 자리를 내주고 드라이버의 품으로 돌아온 길",
     "characteristics": "배후령 터널 개통으로 교통량이 거의 없어진 구 46번 국도. 노면 상태가 양호하고 중고속 코너가 이어져 리드미컬한 주행이 가능.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/GbAxqZ2r",
     "nav": [
       {
         "type": "출발지",
         "name": "춘천시 신북읍 천전삼거리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.92989279781863,
+          "longitude": 127.78158941450509
         }
       },
       {
         "type": "도착지",
-        "name": "화천군 간동면 배후령 정상",
+        "name": "배후령주차장주차장",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.995548752834885,
+          "longitude": 127.78974810957241
         }
       }
     ],
@@ -844,30 +844,22 @@
     "region": "강원도",
     "tagline": "드라이버의 담력을 시험하는 극강의 테크니컬 코스",
     "characteristics": "극심한 고저차와 함께 '말도 안 되게 무시무시한 급경사 헤어핀'이 숨어있는, 난이도 최상의 구간. 특히 더블 헤어핀 구간은 스릴 만점.",
-    "naverMapUrl": "https://naver.me/5XpL1bbm",
+    "naverMapUrl": "https://naver.me/FE3tcB2F",
     "nav": [
       {
         "type": "출발지",
         "name": "화천군 간동면 간척사거리",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
-        }
-      },
-      {
-        "type": "경유지 1",
-        "name": "배치고개",
-        "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 38.028797116191605,
+          "longitude": 127.81672217907915
         }
       },
       {
         "type": "도착지",
         "name": "춘천시 북산면 청평사 주차장",
         "geolocation": {
-          "latitude": 37.4101904296875,
-          "longitude": 127.060546875
+          "latitude": 37.98135648517497,
+          "longitude": 127.81786071900378
         }
       }
     ],

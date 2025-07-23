@@ -29,6 +29,8 @@ export interface Course {
   styles: string[];
   ratings: CourseRatings;
   naverMapUrl: string;
+  thumbnailImage: string; // 썸네일 이미지 URL
+  detailImage: string; // 상세 이미지 URL
 }
 
 // 필터 관련 타입

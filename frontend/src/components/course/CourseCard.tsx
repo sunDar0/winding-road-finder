@@ -20,42 +20,6 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
     return 'text-red-600';
   };
 
-  // Static Map URL 생성
-  const generateStaticMapUrl = () => {
-    if (!course.nav || course.nav.length === 0) {
-      return null;
-    }
-
-    const clientId = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
-    
-    if (!clientId) {
-      return null;
-    }
-
-    // 경로점들의 중심점 계산
-    const latitudes = course.nav.map(point => point.geolocation.latitude);
-    const longitudes = course.nav.map(point => point.geolocation.longitude);
-    
-    const centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
-    const centerLng = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
-    
-
-    // 줌 레벨 계산 (경로점들의 분산에 따라)
-    const latDiff = Math.max(...latitudes) - Math.min(...latitudes);
-    const lngDiff = Math.max(...longitudes) - Math.min(...longitudes);
-    const maxDiff = Math.max(latDiff, lngDiff);
-    
-    let zoom = 12;
-    if (maxDiff > 0.1) zoom = 10;
-    if (maxDiff > 0.2) zoom = 9;
-    if (maxDiff > 0.5) zoom = 8;
-    if (maxDiff < 0.01) zoom = 14;
-    
-    
-    return `https://maps.apigw.ntruss.com/map-static/v2/raster-cors?w=500&h=500&center=${centerLng},${centerLat}&level=${zoom}&scale=2&X-NCP-APIGW-API-KEY-ID=${clientId}`;
-  };
-
-  const staticMapUrl = generateStaticMapUrl();
   return (
     <div 
       className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
@@ -79,14 +43,29 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
         
         <CardContent className="pt-0">
           {/* 지도 썸네일 */}
-          {staticMapUrl ? (
+          {course.thumbnailImage ? (
             <div className="mb-4">
               <img 
-                src={staticMapUrl}
+                src={`http://localhost:8080${course.thumbnailImage}`}
                 alt={`${course.name} 코스 경로`}
                 className="w-full h-48 aspect-square object-cover rounded-lg border border-gray-200"
                 loading="lazy"
+                onError={(e) => {
+                  console.error('썸네일 이미지 로드 실패:', course.thumbnailImage);
+                  // 이미지 로드 실패 시 플레이스홀더 표시
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
               />
+              {/* 이미지 로드 실패 시 플레이스홀더 */}
+              <div className="hidden h-48 aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
+                <div className="text-center text-gray-500">
+                  <svg className="h-8 w-8 mx-auto mb-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  <p className="text-xs">경로 정보 없음</p>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="mb-4 h-48 aspect-square bg-gray-100 rounded-lg flex items-center justify-center">

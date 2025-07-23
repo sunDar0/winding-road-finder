@@ -77,6 +77,7 @@ export function CourseDetail({ course, onBack }: CourseDetailProps) {
             navPoints={course.nav} 
             courseName={course.name}
             naverMapUrl={course.naverMapUrl}
+            detailImageUrl={course.detailImage}
           />
         </CardContent>
       </Card>
